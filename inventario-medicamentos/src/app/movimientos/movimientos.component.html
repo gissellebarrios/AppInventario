@@ -1,0 +1,24 @@
+<h2>Historial de Movimientos</h2>
+<form (submit)="addMovimiento()">
+  <label for="medicamentoId">Medicamento:</label>
+  <input type="number" id="medicamentoId" [(ngModel)]="movimiento.medicamentoId" name="medicamentoId" required>
+  
+  <label for="cantidad">Cantidad:</label>
+  <input type="number" id="cantidad" [(ngModel)]="movimiento.cantidad" name="cantidad" required>
+
+  <label for="tipo">Tipo de Movimiento:</label>
+  <select id="tipo" [(ngModel)]="movimiento.tipo" name="tipo" required>
+    <option value="entrada">Entrada</option>
+    <option value="salida">Salida</option>
+  </select>
+
+  <button type="submit">Registrar Movimiento</button>
+</form>
+
+<div *ngIf="movimientos.length > 0">
+  <ul>
+    <li *ngFor="let movimiento of movimientos">
+      Medicamento ID: {{ movimiento.medicamentoId }} - Cantidad: {{ movimiento.cantidad }} - Tipo: {{ movimiento.tipo }} - Fecha: {{ movimiento.fecha }}
+    </li>
+  </ul>
+</div>

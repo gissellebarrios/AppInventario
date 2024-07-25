@@ -1,0 +1,15 @@
+<h2>Medicamentos</h2>
+<input type="text" [(ngModel)]="searchTerm" placeholder="Buscar..." (input)="applyFilters()">
+
+<button (click)="showAddForm()">Agregar Medicamento</button>
+
+<!-- Mostrar medicamentos filtrados -->
+<div *ngIf="filteredMedicamentos.length > 0">
+  <ul>
+    <li *ngFor="let medicamento of filteredMedicamentos">
+      {{ medicamento.codigo }} - {{ medicamento.nombre }} - {{ medicamento.cantidad }} - {{ medicamento.precio | currency }}
+      <button (click)="editMedicamento(medicamento)">Editar</button>
+      <button (click)="deleteMedicamento(medicamento.id)">Eliminar</button>
+    </li>
+  </ul>
+</div>
