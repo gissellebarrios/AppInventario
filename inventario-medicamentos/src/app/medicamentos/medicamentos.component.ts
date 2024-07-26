@@ -5,10 +5,10 @@ import { MedicamentosService } from '../medicamentos.service';
 @Component({
   selector: 'app-medicamentos',
   templateUrl: './medicamentos.component.html',
-  styleUrls: ['./medicamentos.component.css']
+  styleUrls: ['./medicamentos.component.css'],
 })
 
-export class MedicamentosComponent {
+export class MedicamentosComponent implements OnInit {
   medicamentos: any[] = [];
   isAddFormVisible = false;
   nuevoMedicamento = { nombre:'', codigo:'', precio: 0, cantidad: 0};

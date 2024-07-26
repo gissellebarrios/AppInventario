@@ -1,29 +1,61 @@
-<div class="medicamentos-container">
-  <h2>Lista de Medicamentos</h2>
+<div class="header-image"></div>
 
-  <button (click)="showAddForm()">Agregar Medicamento</button>
+<div class="container">
+  <h2>Sistema de Inventario de Medicamentos</h2>
 
-  <div *ngIf="isAddFormVisible">
+  <div class="text-right mb-3">
+    <button class="btn btn-primary" (click)="showAddForm()">Agregar Medicamento</button>
+  </div>
+
+  <!-- Formulario para agregar medicamento -->
+  <div *ngIf="isAddFormVisible" class="mb-3">
     <form (ngSubmit)="addMedicamento(nuevoMedicamento)">
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" [(ngModel)]="nuevoMedicamento.nombre" name="nombre">
-      
-      <label for="codigo">Código:</label>
-      <input id="codigo" [(ngModel)]="nuevoMedicamento.codigo" name="codigo">
-      
-      <label for="precio">Precio:</label>
-      <input id="precio" [(ngModel)]="nuevoMedicamento.precio" name="precio">
-      
-      <label for="cantidad">Cantidad:</label>
-      <input id="cantidad" [(ngModel)]="nuevoMedicamento.cantidad" name="cantidad">
-      
-      <button type="submit">Agregar</button>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="nuevoMedicamento.nombre" name="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" [(ngModel)]="nuevoMedicamento.codigo" name="codigo" required>
+      </div>
+      <div class="form-group">
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" [(ngModel)]="nuevoMedicamento.precio" name="precio" required>
+      </div>
+      <div class="form-group">
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" [(ngModel)]="nuevoMedicamento.cantidad" name="cantidad" required>
+      </div>
+      <div>
+        <button type="button" class="btn btn-success" (click)="addMedicamento(nuevoMedicamento)">Aceptar</button>
+        <button type="button" class="btn btn-danger" (click)="showAddForm()">Cancelar</button>
+      </div>
     </form>
   </div>
 
-  <div *ngFor="let medicamento of medicamentos">
-    <p>Nombre: {{ medicamento.nombre }} - Código: {{ medicamento.codigo }} - Precio: {{ medicamento.precio }} - Cantidad: {{ medicamento.cantidad }}</p>
-    <button (click)="editMedicamento(medicamento)">Editar</button>
-    <button (click)="deleteMedicamento(medicamento.id)">Eliminar</button>
-  </div>
+  <!-- Tabla para mostrar medicamentos -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medicamento of medicamentos">
+        <td>{{ medicamento.nombre }}</td>
+        <td>{{ medicamento.codigo }}</td>
+        <td>{{ medicamento.precio | currency }}</td>
+        <td>{{ medicamento.cantidad }}</td>
+        <td>
+          <!-- Botones para editar y eliminar -->
+          <button (click)="editMedicamento(medicamento)" class="btn btn-primary btn-sm">Editar</button>
+          <button (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger btn-sm">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

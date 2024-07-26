@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-registro-medicamentos',
   templateUrl: './registro-medicamentos.component.html',
-  styleUrls: ['./registro-medicamentos.component.css']
+  styleUrls: ['./registro-medicamentos.component.css'],
 })
 export class RegistroMedicamentosComponent {
   medicamento = {

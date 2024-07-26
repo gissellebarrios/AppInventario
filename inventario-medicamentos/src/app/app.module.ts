@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -11,13 +11,18 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MovimientosComponent } from './movimientos/movimientos.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { RegistroMedicamentosComponent } from './registro-medicamentos/registro-medicamentos.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { AppRoutingModule } from './app.routes';
 
 @NgModule({
     declarations:[
         AppComponent,
         ReportesComponent,
-        MedicamentosComponent
+        MedicamentosComponent,
+        MovimientosComponent,
+        NotificacionesComponent,
+        RegistroMedicamentosComponent,
+        EstadisticasComponent
     ],
     imports: [
         BrowserModule,
@@ -25,7 +30,8 @@ import { AppRoutingModule } from './app.routes';
         RouterModule,
         AppRoutingModule,
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

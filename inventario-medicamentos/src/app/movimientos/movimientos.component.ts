@@ -4,7 +4,7 @@ import { MovimientosService } from '../movimientos.service';
 @Component({
   selector: 'app-movimientos',
   templateUrl: './movimientos.component.html',
-  styleUrls: ['./movimientos.component.css']
+  styleUrls: ['./movimientos.component.css'],
 })
 export class MovimientosComponent implements OnInit {
   movimientos: any[] = [];
