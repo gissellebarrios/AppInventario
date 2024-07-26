@@ -1,24 +1,28 @@
-<h2>Historial de Movimientos</h2>
-<form (submit)="addMovimiento()">
-  <label for="medicamentoId">Medicamento:</label>
-  <input type="number" id="medicamentoId" [(ngModel)]="movimiento.medicamentoId" name="medicamentoId" required>
-  
-  <label for="cantidad">Cantidad:</label>
-  <input type="number" id="cantidad" [(ngModel)]="movimiento.cantidad" name="cantidad" required>
+<div>
+  <h2>Registro de Movimientos</h2>
 
-  <label for="tipo">Tipo de Movimiento:</label>
-  <select id="tipo" [(ngModel)]="movimiento.tipo" name="tipo" required>
-    <option value="entrada">Entrada</option>
-    <option value="salida">Salida</option>
-  </select>
+  <form (ngSubmit)="addMovimiento()">
+    <label for="medicamentoId">ID del Medicamento:</label>
+    <input type="number" id="medicamentoId" ([ngModel)]="movimiento.medicamentoId" name="medicamentoId" required>
 
-  <button type="submit">Registrar Movimiento</button>
-</form>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" ([ngModel)]="movimiento.cantidad" name="cantidad" required>
 
-<div *ngIf="movimientos.length > 0">
-  <ul>
-    <li *ngFor="let movimiento of movimientos">
-      Medicamento ID: {{ movimiento.medicamentoId }} - Cantidad: {{ movimiento.cantidad }} - Tipo: {{ movimiento.tipo }} - Fecha: {{ movimiento.fecha }}
-    </li>
-  </ul>
+    <label for="tipo">Tipo:</label>
+    <input type="number" id="tipo" ([ngModel)]="movimiento.tipo" name="tipo" required>
+
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha"([ngModel)]="movimiento.fecha" name="fecha">
+
+    <button type="submit">Registrar Movimiento</button>
+  </form>
+
+  <div *ngIf="movimientos.length > 0">
+    <h3>Historial de Movimientos:</h3>
+    <ul>
+      <li *ngFor="let movimiento of movimientos">
+        Medicamento ID: {{ movimiento.medicamentoId }} - Cantidad: {{ movimiento.cantidad }} - Tipo: {{ movimiento.tipo }} - Fecha: {{ movimiento.fecha }}
+      </li>
+    </ul>
+  </div>
 </div>

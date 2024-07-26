@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MedicamentosService {
-  private apiUrl = 'htpp://localhost:8000/api/medicamentos';
+  private apiUrl = 'htpp://localhost:3000/api/medicamentos';
   constructor(private http: HttpClient) { }
+  
   getMedicamentos(): Observable<any[]>{
     return this.http.get<any[]>(this.apiUrl);
   }

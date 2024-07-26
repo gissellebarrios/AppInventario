@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MovimientosService {
-  private apiUrl = 'htpp://localhost:8000/api/movimientos';
+  private apiUrl = 'htpp://localhost:3000/movimientos';
   constructor(private http: HttpClient) { }
   
   getMovimientos(): Observable<any[]>{

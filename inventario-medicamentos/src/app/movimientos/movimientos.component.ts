@@ -9,7 +9,7 @@ import { MovimientosService } from '../movimientos.service';
 export class MovimientosComponent implements OnInit {
   movimientos: any[] = [];
   movimiento = {
-    medicamentoid:0,
+    medicamentoId:0,
     cantidad:0,
     tipo:'',
     fecha:new Date().toISOString()
@@ -26,9 +26,10 @@ export class MovimientosComponent implements OnInit {
     })
   }
 
-  addMovimientos(){
+  addMovimiento(){
     this.movimientoService.addMovimiento(this.movimiento).subscribe(()=>{
       this.loadMovimientos();
+      this.movimiento = { medicamentoId:0, cantidad: 0, tipo: '', fecha: new Date().toISOString() }
     })
   }
 }

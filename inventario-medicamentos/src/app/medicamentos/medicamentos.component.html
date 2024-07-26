@@ -1,15 +1,29 @@
-<h2>Medicamentos</h2>
-<input type="text" [(ngModel)]="searchTerm" placeholder="Buscar..." (input)="applyFilters()">
+<div class="medicamentos-container">
+  <h2>Lista de Medicamentos</h2>
 
-<button (click)="showAddForm()">Agregar Medicamento</button>
+  <button (click)="showAddForm()">Agregar Medicamento</button>
 
-<!-- Mostrar medicamentos filtrados -->
-<div *ngIf="filteredMedicamentos.length > 0">
-  <ul>
-    <li *ngFor="let medicamento of filteredMedicamentos">
-      {{ medicamento.codigo }} - {{ medicamento.nombre }} - {{ medicamento.cantidad }} - {{ medicamento.precio | currency }}
-      <button (click)="editMedicamento(medicamento)">Editar</button>
-      <button (click)="deleteMedicamento(medicamento.id)">Eliminar</button>
-    </li>
-  </ul>
+  <div *ngIf="isAddFormVisible">
+    <form (ngSubmit)="addMedicamento(nuevoMedicamento)">
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" [(ngModel)]="nuevoMedicamento.nombre" name="nombre">
+      
+      <label for="codigo">Código:</label>
+      <input id="codigo" [(ngModel)]="nuevoMedicamento.codigo" name="codigo">
+      
+      <label for="precio">Precio:</label>
+      <input id="precio" [(ngModel)]="nuevoMedicamento.precio" name="precio">
+      
+      <label for="cantidad">Cantidad:</label>
+      <input id="cantidad" [(ngModel)]="nuevoMedicamento.cantidad" name="cantidad">
+      
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <div *ngFor="let medicamento of medicamentos">
+    <p>Nombre: {{ medicamento.nombre }} - Código: {{ medicamento.codigo }} - Precio: {{ medicamento.precio }} - Cantidad: {{ medicamento.cantidad }}</p>
+    <button (click)="editMedicamento(medicamento)">Editar</button>
+    <button (click)="deleteMedicamento(medicamento.id)">Eliminar</button>
+  </div>
 </div>
