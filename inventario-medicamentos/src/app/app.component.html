@@ -1,3 +1,30 @@
-<div class="app-container">
-  <router-outlet></router-outlet>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Project</title>
+  <!-- Incluye los estilos del template SB Admin -->
+  <link href="/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Barra lateral (Sidebar) -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark sidebar">
+      <!-- Aquí va el contenido de la barra lateral del template -->
+    </nav>
+
+    <!-- Contenedor del contenido -->
+    <div id="content-wrapper">
+      <!-- Contenido de la página -->
+      <div class="container-fluid">
+        <!-- Aquí se cargará el contenido de tus componentes de Angular -->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incluye los scripts del template SB Admin -->
+  <script src="assets/js/scripts.js"></script>
+</body>
+</html>
