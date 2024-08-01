@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { MedicamentosService } from '../medicamentos.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -10,11 +11,14 @@ import { MedicamentosService } from '../medicamentos.service';
 
 export class MedicamentosComponent implements OnInit {
   medicamentos: any[] = [];
-  isAddFormVisible = false;
-  nuevoMedicamento = { nombre:'', codigo:'', precio: 0, cantidad: 0};
+  selectedMedicamento = { nombre:'', codigo:'', precio: 0, cantidad: 0};
+  editMode = false;
 
   
-constructor(private medicamentosService: MedicamentosService) {}
+constructor(
+  private medicamentosService: MedicamentosService, 
+  private modalService: NgbModal
+) {}
 
   ngOnInit(): void {
     this.loadMedicamentos();
@@ -25,19 +29,31 @@ constructor(private medicamentosService: MedicamentosService) {}
       this.medicamentos = data;
     });
   }
-  showAddForm() {
-    this.isAddFormVisible = !this.isAddFormVisible;
+  openModal(medicamento?: any){
+    if (medicamento){
+      this.selectedMedicamento = {...medicamento};
+      this.editMode = true;
+    } else {
+      this.selectedMedicamento = { nombre:'', codigo:'', precio:0, cantidad:0 };
+      this.editMode = false;
+    }
+    this.modalService.open('medicamentoModal')
   }
 
-  addMedicamento(medicamento: any) {
-    this.medicamentosService.addMedicamento(medicamento).subscribe(() => {
-      this.loadMedicamentos();
-      this.showAddForm();
-    });
-  }
-
-  editMedicamento(medicamento: any) {
-    // Implementar lógica para editar medicamento
+  onSubmit() {
+    if (this.editMode){
+      this.medicamentosService.updateMedicamento(this.selectedMedicamento).subscribe(() => {
+        this.loadMedicamentos();
+        this.modalService.dismissAll();
+      });
+    } else {
+        this.medicamentosService.addMedicamento(this.selectedMedicamento).subscribe(() =>{
+          this.loadMedicamentos();
+          this.modalService.dismissAll();
+        })
+    }
+    
+    
   }
 
   deleteMedicamento(id: number) {

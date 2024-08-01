@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { ReportesComponent } from './reportes/reportes.component';
@@ -31,7 +32,8 @@ import { AppRoutingModule } from './app.routes';
         AppRoutingModule,
         CommonModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        NgbModule
     ],
     providers: [],
     bootstrap: [AppComponent]

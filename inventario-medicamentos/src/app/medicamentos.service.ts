@@ -17,7 +17,7 @@ export class MedicamentosService {
     return this.http.post<any>(this.apiUrl, medicamento);
   }
 
-  updateMedicamento(id: number, medicamento: any): Observable<any>{
+  updateMedicamento(medicamento: any): Observable<any>{
     return this.http.put<any>('${this.apiUrl}/${id}', medicamento);
   }
 

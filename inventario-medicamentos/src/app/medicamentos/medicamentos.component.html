@@ -1,61 +1,71 @@
-<div class="header-image"></div>
+<|doctype html>
+<html lang="en">
+<div class="container-fluid">
+  <button class="btn btn-primary" (click)="openModal()">Agregar Medicamento</button>
 
-<div class="container">
-  <h2>Sistema de Inventario de Medicamentos</h2>
-
-  <div class="text-right mb-3">
-    <button class="btn btn-primary" (click)="showAddForm()">Agregar Medicamento</button>
+  <div class="card mb-4">
+    <div class="card-header">
+      <h4 class="card-title">Lista de Medicamentos</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-stripped table-bordered">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let medicamento of medicamentos">
+            <td>{{ medicamento.nombre }}</td>
+            <td>{{ medicamento.codigo }}</td>
+            <td>{{ medicamento.precio | currency }}</td>
+            <td>{{ medicamento.cantidad }}</td>
+            <td>
+              <!-- Botones para editar y eliminar -->
+              <button (click)="openModal(medicamento)" class="btn btn-primary">Editar</button>
+              <button (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- Formulario para agregar medicamento -->
-  <div *ngIf="isAddFormVisible" class="mb-3">
-    <form (ngSubmit)="addMedicamento(nuevoMedicamento)">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="nuevoMedicamento.nombre" name="nombre" required>
-      </div>
-      <div class="form-group">
-        <label for="codigo">Código:</label>
-        <input type="text" id="codigo" [(ngModel)]="nuevoMedicamento.codigo" name="codigo" required>
-      </div>
-      <div class="form-group">
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" [(ngModel)]="nuevoMedicamento.precio" name="precio" required>
-      </div>
-      <div class="form-group">
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" [(ngModel)]="nuevoMedicamento.cantidad" name="cantidad" required>
-      </div>
-      <div>
-        <button type="button" class="btn btn-success" (click)="addMedicamento(nuevoMedicamento)">Aceptar</button>
-        <button type="button" class="btn btn-danger" (click)="showAddForm()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Tabla para mostrar medicamentos -->
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Código</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let medicamento of medicamentos">
-        <td>{{ medicamento.nombre }}</td>
-        <td>{{ medicamento.codigo }}</td>
-        <td>{{ medicamento.precio | currency }}</td>
-        <td>{{ medicamento.cantidad }}</td>
-        <td>
-          <!-- Botones para editar y eliminar -->
-          <button (click)="editMedicamento(medicamento)" class="btn btn-primary btn-sm">Editar</button>
-          <button (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger btn-sm">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-template #medicamentoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{editMode ? 'Editar Medicamento': 'Agregar Medicamento' }}</h4>
+      <button type="button" class="btn-close" aria-label="close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" [(ngModel)]="selectedMedicamento.nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="codigo">Código</label>
+          <input type="text" id="codigo" [(ngModel)]="selectedMedicamento.codigo" name="codigo" required>
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input type="number" id="precio" [(ngModel)]="selectedMedicamento.precio" name="precio" required>
+        </div>
+        <div class="form-group">
+          <label for="cantidad">Cantidad</label>
+          <input type="number" id="cantidad" [(ngModel)]="selectedMedicamento.cantidad" name="cantidad" required>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">{{ editMode ? 'Actualizar' : 'Aceptar' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cancelar</button>
+    </div>
+  </ng-template>
 </div>
+</html>
+  
+

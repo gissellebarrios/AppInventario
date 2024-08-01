@@ -1,51 +1,9 @@
-.container{
-  text-align: center;
-  padding: 50px;
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
 }
 
-h1{
-  color: #ebf0f5;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
+/* Estilos para la tabla */
 .table {
   margin-top: 20px;
-}
-
-.table th, .table td {
-  vertical-align: middle;
-}
-
-.btn-primary {
-  background-color: #007BFF;
-  border-color: #007BFF;
-  color: #FFFFFF;
-  border-radius: 20px;
-}
-
-.btn-success {
-  background-color: #28A745;
-  border-color: #28A745;
-  color: #FFFFFF;
-  border-radius: 20px;
-}
-
-.btn-danger {
-  background-color: #DC3545;
-  border-color: #DC3545;
-  color: #FFFFFF;
-  border-radius: 20px;
-}
-
-.btn {
-  color: white;
-  border-radius: 20px;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
 }
