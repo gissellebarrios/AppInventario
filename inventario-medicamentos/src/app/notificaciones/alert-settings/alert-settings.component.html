@@ -1,0 +1,10 @@
+<div class="container">
+    <h2>Configuración de Alertas de Bajo Stock</h2>
+    <form [formGroup]="alertForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="threshold">Umbral de Bajo Stock:</label>
+        <input id="threshold" formControlName="threshold" type="number" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>

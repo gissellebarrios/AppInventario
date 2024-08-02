@@ -1,35 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { MovimientosService } from '../movimientos.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MedicamentosService } from '../medicamentos.service';
 
 @Component({
   selector: 'app-movimientos',
   templateUrl: './movimientos.component.html',
-  styleUrls: ['./movimientos.component.css'],
+  styleUrls: ['./movimientos.component.css']
 })
 export class MovimientosComponent implements OnInit {
-  movimientos: any[] = [];
-  movimiento = {
-    medicamentoId:0,
-    cantidad:0,
-    tipo:'',
-    fecha:new Date().toISOString()
-  };
-  constructor(private movimientoService: MovimientosService){}
+  medicamentos: any[] = [];
+  selectedMedicamento: any = {};
+  movimientoForm: FormGroup;
+
+  constructor(
+    private medicamentosService: MedicamentosService,
+    private modalService: NgbModal,
+    private fb: FormBuilder
+  ) {
+    this.movimientoForm = this.fb.group({
+      nombre: [''],
+      cantidad: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
+      motivo: ['', [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
-    this.loadMovimientos();
+    this.loadMedicamentos();
   }
 
-  loadMovimientos(){
-    this.movimientoService.getMovimientos().subscribe(data =>{
-      this.movimientos = data;
-    })
+  loadMedicamentos(): void {
+    this.medicamentosService.getAll().subscribe((data: any[]) => {
+      this.medicamentos = data;
+    });
   }
 
-  addMovimiento(){
-    this.movimientoService.addMovimiento(this.movimiento).subscribe(()=>{
-      this.loadMovimientos();
-      this.movimiento = { medicamentoId:0, cantidad: 0, tipo: '', fecha: new Date().toISOString() }
-    })
+  openModal(content: any, medicamento: any): void {
+    this.selectedMedicamento = medicamento;
+    this.movimientoForm.patchValue({
+      nombre: medicamento.nombre
+    });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  onSubmit(): void {
+    if (this.movimientoForm.valid) {
+      const movimiento = this.movimientoForm.value;
+      // Handle the form submission logic here, like saving to a service or backend
+      console.log(movimiento);
+      this.modalService.dismissAll();
+    }
   }
 }

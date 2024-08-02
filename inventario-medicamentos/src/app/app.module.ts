@@ -10,12 +10,13 @@ import { AppComponent } from './app.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MovimientosComponent } from './movimientos/movimientos.component';
-import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { RegistroMedicamentosComponent } from './registro-medicamentos/registro-medicamentos.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { AppRoutingModule } from './app.routes';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
+import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
+
 
 @NgModule({
     declarations:[
@@ -23,8 +24,6 @@ import { RegisterComponent } from './register/register.component';
         ReportesComponent,
         MedicamentosComponent,
         MovimientosComponent,
-        NotificacionesComponent,
-        RegistroMedicamentosComponent,
         EstadisticasComponent,
     ],
     imports: [
@@ -37,7 +36,9 @@ import { RegisterComponent } from './register/register.component';
         HttpClientModule,
         NgbModule,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        AlertSettingsComponent,
+        NotificacionListComponent
     ],
     providers: [],
     bootstrap: [AppComponent]

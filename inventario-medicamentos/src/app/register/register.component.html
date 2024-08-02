@@ -1,30 +1,43 @@
 <div class="container">
-    <h2>Register</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" class="form-control" formControlName="username">
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <div class="card shadow-lg border-0 rounded-lg mt-5">
+        <div class="card-header">
+          <h3 class="text-center font-weight-light my-4">Registro de Usuario</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-floating mb-3">
+              <input class="form-control" id="inputFirstName" type="text" placeholder="First Name" formControlName="firstName" />
+              <label for="inputFirstName">First Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="inputLastName" type="text" placeholder="Last Name" formControlName="lastName" />
+              <label for="inputLastName">Last Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="inputUsername" type="text" placeholder="Username" formControlName="username" />
+              <label for="inputUsername">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="inputPassword" type="password" placeholder="Password" formControlName="password" />
+              <label for="inputPassword">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+              <label for="inputConfirmPassword">Confirm Password</label>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" type="submit">Register</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center py-3">
+          <div class="small">
+            <a href="/login">Already registered? Login here</a>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" class="form-control" formControlName="nombre">
-      </div>
-      <div class="form-group">
-        <label for="apellido">Apellidos:</label>
-        <input type="text" id="apellido" class="form-control" formControlName="apellido">
-      </div>
-      <div class="form-group">
-        <label for="rol">Rol:</label>
-        <input type="text" id="rol" class="form-control" formControlName="rol">
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" class="form-control" formControlName="email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" class="form-control" formControlName="password">
-      </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    </div>
+  </div>
 </div>

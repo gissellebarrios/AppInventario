@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,17 +12,17 @@ import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private router: Router){
   this.registerForm = this.fb.group({
     username: ['', Validators.required],
     email: ['', Validators.required, Validators.email],
-    nombre: ['', Validators.required],
-    apellido: ['', Validators.required],
+    firtsName: ['', Validators.required],
+    lastName: ['', Validators.required],
     password:['', Validators.required],
-    rol:['', Validators.required]
+    confirmpassword:['', Validators.required],
   })
   }
-  onSubmit(){
+  onSubmit(): void {
     if(this.registerForm.valid) {
     console.log(this.registerForm.value)
     }

@@ -23,13 +23,37 @@
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
         <a class="nav-link" href="index.html">
-          <i class="fa fa-medkit" aria-hidden="true"></i>
-          <span> Inicio</span></a>
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span> Login</span></a>
       </li>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         Modulos
       </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/medicamentos" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-medkit" aria-hidden="true"></i>
+          <span> Registro de Medicamentos</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/movimientos" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-random" aria-hidden="true"></i>
+          <span> Movimientos </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/configuracionalerta" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-bell" aria-hidden="true"></i>
+          <span> Configuración de las Alertas </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/listalertas" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <span> Lista de Alertas activas </span>
+        </a>
+      </li>
     </ul>
     <!-- End of Sidebar -->
 
@@ -73,12 +97,11 @@
         <div class="container-fluid">
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <app-medicamentos></app-medicamentos>
           </div>
 
           <!-- Content Row -->
           <div class="row">
-            <!-- Your content goes here -->
+            <router-outlet></router-outlet>
           </div>
         </div>
         <!-- /.container-fluid -->
@@ -89,7 +112,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>Copyright &copy; PharmaLogic 2024</span>
           </div>
         </div>
       </footer>

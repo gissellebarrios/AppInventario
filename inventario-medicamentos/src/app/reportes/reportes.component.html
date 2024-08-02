@@ -1,14 +1,14 @@
 <h2>Generar Reporte de Inventario</h2>
 <form (submit)="generarReporte()">
   <label for="periodo">Periodo:</label>
-  <select id="periodo" [(ngModel)]="periodo" name="periodo" required>
+  <select id="periodo" ([ngModel])="periodo" name="periodo" required>
     <option value="diario">Diario</option>
     <option value="semanal">Semanal</option>
     <option value="mensual">Mensual</option>
   </select>
 
   <label for="formato">Formato:</label>
-  <select id="formato" [(ngModel)]="formato" name="formato" required>
+  <select id="formato" ([ngModel])="formato" name="formato" required>
     <option value="json">JSON</option>
     <option value="pdf">PDF</option>
     <option value="excel">Excel</option>

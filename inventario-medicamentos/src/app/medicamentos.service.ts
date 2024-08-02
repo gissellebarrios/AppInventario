@@ -24,4 +24,8 @@ export class MedicamentosService {
   deleteMedicamento(id: number): Observable<any>{
     return this.http.delete<any>('${this.apiUrl}/${id}');
   }
+
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }
