@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MedicamentosService } from '../medicamentos.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -14,6 +14,7 @@ export class MedicamentosComponent implements OnInit {
   selectedMedicamento = { nombre:'', codigo:'', precio: 0, cantidad: 0};
   editMode = false;
 
+  @ViewChild('medicamentoModal') medicamentoModal: any;
   
 constructor(
   private medicamentosService: MedicamentosService, 
@@ -37,23 +38,20 @@ constructor(
       this.selectedMedicamento = { nombre:'', codigo:'', precio:0, cantidad:0 };
       this.editMode = false;
     }
-    this.modalService.open('medicamentoModal')
+    this.modalService.open(this.medicamentoModal)
   }
 
-  onSubmit() {
+  saveMedicamento() {
     if (this.editMode){
       this.medicamentosService.updateMedicamento(this.selectedMedicamento).subscribe(() => {
         this.loadMedicamentos();
-        this.modalService.dismissAll();
       });
     } else {
         this.medicamentosService.addMedicamento(this.selectedMedicamento).subscribe(() =>{
           this.loadMedicamentos();
-          this.modalService.dismissAll();
         })
     }
-    
-    
+    this.modalService.dismissAll();
   }
 
   deleteMedicamento(id: number) {

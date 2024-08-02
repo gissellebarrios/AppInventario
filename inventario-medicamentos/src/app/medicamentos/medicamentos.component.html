@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="en">
-<div class="container-fluid">
-  <button class="btn btn-primary" (click)="openModal()">Agregar Medicamento</button>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="text-center">Medicamentos</h2>
+      <div class="text-center mb-3">
+        <button class="btn btn-primary" (click)="openModal()">Agregar Medicamento</button>
+      </div>
 
-  <div class="card mb-4">
-    <div class="card-header">
-      <h4 class="card-title">Lista de Medicamentos</h4>
-    </div>
-    <div class="card-body">
-      <table class="table table-stripped table-bordered">
+      <div *ngIf="medicamentos.length === 0" class="alert alert-info text-center">
+        No hay ningún dato registrado.
+      </div>
+      <table *ngIf="medicamentos.length > 0 " class="table table-bordered table-striped mt-3">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -32,39 +35,40 @@
           </tr>
         </tbody>
       </table>
+      <ng-template #medicamentoModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">{{editMode ? 'Editar Medicamento': 'Agregar Medicamento' }}</h4>
+          <button type="button" class="btn-close" aria-label="close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" [(ngModel)]="selectedMedicamento.nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="codigo">Código</label>
+              <input type="text" id="codigo" class="form-control" [(ngModel)]="selectedMedicamento.codigo" name="codigo" required>
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" id="precio" class="form-control" [(ngModel)]="selectedMedicamento.precio" name="precio" required>
+            </div>
+            <div class="form-group">
+              <label for="cantidad">Cantidad</label>
+              <input type="number" id="cantidad" class="form-control"[(ngModel)]="selectedMedicamento.cantidad" name="cantidad" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="saveMedicamento()">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cancelar</button>
+        </div>
+      </ng-template>    
     </div>
   </div>
-
-  <ng-template #medicamentoModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">{{editMode ? 'Editar Medicamento': 'Agregar Medicamento' }}</h4>
-      <button type="button" class="btn-close" aria-label="close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" [(ngModel)]="selectedMedicamento.nombre" name="nombre" required>
-        </div>
-        <div class="form-group">
-          <label for="codigo">Código</label>
-          <input type="text" id="codigo" [(ngModel)]="selectedMedicamento.codigo" name="codigo" required>
-        </div>
-        <div class="form-group">
-          <label for="precio">Precio</label>
-          <input type="number" id="precio" [(ngModel)]="selectedMedicamento.precio" name="precio" required>
-        </div>
-        <div class="form-group">
-          <label for="cantidad">Cantidad</label>
-          <input type="number" id="cantidad" [(ngModel)]="selectedMedicamento.cantidad" name="cantidad" required>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">{{ editMode ? 'Actualizar' : 'Aceptar' }}</button>
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cancelar</button>
-    </div>
-  </ng-template>
 </div>
 </html>
   

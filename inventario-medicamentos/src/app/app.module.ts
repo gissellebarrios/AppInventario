@@ -14,6 +14,8 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 import { RegistroMedicamentosComponent } from './registro-medicamentos/registro-medicamentos.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { AppRoutingModule } from './app.routes';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
     declarations:[
@@ -23,7 +25,7 @@ import { AppRoutingModule } from './app.routes';
         MovimientosComponent,
         NotificacionesComponent,
         RegistroMedicamentosComponent,
-        EstadisticasComponent
+        EstadisticasComponent,
     ],
     imports: [
         BrowserModule,
@@ -33,7 +35,9 @@ import { AppRoutingModule } from './app.routes';
         CommonModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgbModule
+        NgbModule,
+        LoginComponent,
+        RegisterComponent
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -25,14 +25,16 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/css/styles.css",
+              "src/assets/vendor/fontawesome-free/css/all.min.css",
+              "src/styles.css",
+              "src/assets/scss/sb-admin-2.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/scripts.js"
+              "src/assets/vendor/jquery/jquery.min.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/vendor/jquery-easing/jquery.easing.min.js",
+              "src/assets/vendor/js/sb-admin-2.min.js"
             ]
           },
           "configurations": {
@@ -90,7 +92,9 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/styles.css"
+              "src/assets/vendor/fontawesome-free/css/all.min.css",
+              "src/styles.css",
+              "src/css/sb-admin-2.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
