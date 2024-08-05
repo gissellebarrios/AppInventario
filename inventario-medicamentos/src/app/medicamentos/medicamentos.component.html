@@ -18,6 +18,8 @@
             <th>Código</th>
             <th>Precio</th>
             <th>Cantidad</th>
+            <th>Fecha de Caducidad</th>
+            <th>Lote</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -27,10 +29,12 @@
             <td>{{ medicamento.codigo }}</td>
             <td>{{ medicamento.precio }}</td>
             <td>{{ medicamento.cantidad }}</td>
+            <td>{{ medicamento.fechacaducidad }}</td>
+            <td>{{ medicamento.lote }}</td>
             <td>
               <!-- Botones para editar y eliminar -->
               <button (click)="openModal(medicamento)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger">Eliminar</button>
+              <button *ngIf="medicamento.id != undefined" (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger">Eliminar</button>
             </td>
           </tr>
         </tbody>
@@ -59,6 +63,14 @@
             <div class="form-group">
               <label for="cantidad">Cantidad</label>
               <input type="number" id="cantidad" class="form-control" ([ngModel])="selectedMedicamento.cantidad" name="cantidad" required>
+            </div>
+            <div class="form-group">
+              <label for="fechacaducidad">Fecha de Caducidad</label>
+              <input type="date" id="fechacaducidad" class="form-control" ([ngModel])="selectedMedicamento.fechacaducidad" name="fechacaducidad" required>
+            </div>
+            <div class="form-group">
+              <label for="lote">Lote</label>
+              <input type="text" id="lote" class="form-control" ([ngModel])="selectedMedicamento.lote" name="lote" required>
             </div>
           </form>
         </div>

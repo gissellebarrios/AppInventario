@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MedicamentosService } from '../medicamentos.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Medicamentos } from './medicamentos.module';
+
 
 
 @Component({
@@ -10,8 +12,15 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class MedicamentosComponent implements OnInit {
-  medicamentos: any[] = [];
-  selectedMedicamento = { nombre:'', codigo:'', precio: 0, cantidad: 0};
+  medicamentos: Medicamentos[] = [];
+  selectedMedicamento: Medicamentos = {
+    nombre: '',
+    codigo: '',
+    precio: 0,
+    cantidad: 0,
+    fechacaducidad: '',  
+    lote: '' 
+  };
   editMode = false;
 
   @ViewChild('medicamentoModal') medicamentoModal: any;
@@ -35,7 +44,7 @@ constructor(
       this.selectedMedicamento = {...medicamento};
       this.editMode = true;
     } else {
-      this.selectedMedicamento = { nombre:'', codigo:'', precio:0, cantidad:0 };
+      this.selectedMedicamento = { nombre:'', codigo:'', precio:0, cantidad:0, fechacaducidad:'', lote: '' };
       this.editMode = false;
     }
     this.modalService.open(this.medicamentoModal)
@@ -54,9 +63,14 @@ constructor(
     this.modalService.dismissAll();
   }
 
-  deleteMedicamento(id: number) {
-    this.medicamentosService.deleteMedicamento(id).subscribe(() => {
-      this.loadMedicamentos();
-    });
+  deleteMedicamento(id?: number) {
+    if(id != undefined){
+      this.medicamentosService.deleteMedicamento(id).subscribe(() => {
+        this.loadMedicamentos();
+      });
+    }else{
+      console.error('El id del medicamento es indefinido')
+    }
+    
   }
 }
