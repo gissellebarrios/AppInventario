@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MedicamentosService } from '../medicamentos.service';
+
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Medicamentos } from './medicamentos.module';
+import { Medicamentos } from './module/medicamentos.module';
+import { MedicamentosService } from './service/medicamentos.service';
 
 
 
