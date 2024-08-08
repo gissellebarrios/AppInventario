@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
+import { RegisterService } from './register/service/register.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { NotificacionListComponent } from './notificaciones/notificacion-list/no
         LoginComponent,
         RegisterComponent,
         AlertSettingsComponent,
-        NotificacionListComponent
+        NotificacionListComponent,
+        RegisterComponent,
     ],
     providers: [],
     bootstrap: [AppComponent]

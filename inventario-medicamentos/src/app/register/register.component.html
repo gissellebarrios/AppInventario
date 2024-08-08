@@ -8,24 +8,46 @@
         <div class="card-body">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-floating mb-3">
-              <input class="form-control" id="inputFirstName" type="text" placeholder="First Name" formControlName="firstName" />
-              <label for="inputFirstName">First Name</label>
+              <input class="form-control" id="firts_name" type="text" placeholder="firts_name" formControlName="firts_name" />
+              <label for="firts_name">Nombre</label>
             </div>
             <div class="form-floating mb-3">
-              <input class="form-control" id="inputLastName" type="text" placeholder="Last Name" formControlName="lastName" />
-              <label for="inputLastName">Last Name</label>
+              <input class="form-control" id="last_name" type="text" placeholder="last_name" formControlName="last_name" />
+              <label for="last_name">Apellidos</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select class="form-select" id="tipo_documento" formControlName="tipo_documento">
+                <option value="0">Cédula de Ciudadanía</option>
+                <option value="1">Cédula de Extranjeria</option>
+                <option value="2">Permiso Especial de Permanencia</option>
+                <option value="3">Pasaporte</option>
+                <option value="4">Nit</option>
+              </select>  
+              <label for="tipo_documento">Tipo de Documento</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="nit" type="text" placeholder="nit" formControlName="nit" />
+              <label for="nit">Numero de Documento</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="email" type="text" placeholder="email" formControlName="email" />
+              <label for="email">Correo Electronico</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="direccion" type="text" placeholder="direccion" formControlName="direccion" />
+              <label for="direccion">Dirección</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="phone_number" type="text" placeholder="phone_number" formControlName="phone_number" />
+              <label for="phone_number">Celular</label>
             </div>
             <div class="form-floating mb-3">
               <input class="form-control" id="inputUsername" type="text" placeholder="Username" formControlName="username" />
               <label for="inputUsername">Username</label>
             </div>
             <div class="form-floating mb-3">
-              <input class="form-control" id="inputPassword" type="password" placeholder="Password" formControlName="password" />
-              <label for="inputPassword">Password</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
-              <label for="inputConfirmPassword">Confirm Password</label>
+              <input class="form-control" id="clave" type="password" placeholder="Contraseña" formControlName="clave" />
+              <label for="clave">Contraseña</label>
             </div>
             <div class="form-group">
               <button class="btn btn-primary btn-block" type="submit">Register</button>
