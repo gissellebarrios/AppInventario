@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadisticasService } from '../estadisticas.service';
+import { EstadisticasService } from './service/estadisticas.service';
 
 @Component({
   selector: 'app-estadisticas',
