@@ -22,13 +22,7 @@ export class RegisterComponent {
   this.registerForm = this.fb.group({
     username: ['', Validators.required],
     email: ['', Validators.required, Validators.email],
-    firts_name: ['', Validators.required],
-    last_name: ['', Validators.required],
-    tipo_documento: ['', Validators.required],
-    nit: ['', Validators.required],
-    direccion: ['', Validators.required],
-    phone_number: ['', Validators.required],
-    clave:['', Validators.required],
+    password:['', Validators.required],
   });
   }
   onSubmit(){
@@ -39,7 +33,7 @@ export class RegisterComponent {
     }
     this.registerService.register(this.registerForm.value).subscribe(
       response => {
-        this.router.navigate(['./medicamentos']);
+        this.router.navigate(['./']);
       },
       error => {
         console.error('Error en el registro del usuario',error)

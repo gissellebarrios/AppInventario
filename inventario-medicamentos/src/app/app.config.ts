@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpClientXsrfModule, provideHttpClient } from '@angular/common/http';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { routes } from './app.routes'
 import { AppComponent } from './app.component';
@@ -13,7 +13,13 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
     provideAnimations(),
-    importProvidersFrom(BrowserModule,FormsModule)
+    importProvidersFrom(BrowserModule,FormsModule,
+      HttpClientModule,
+      HttpClientXsrfModule.withOptions({
+        cookieName: 'My-Xsrf-Cookie',
+        headerName: 'My-Xsrf-Header',
+      })
+    ),
   ]
 }).catch(err => console.error(err));
 

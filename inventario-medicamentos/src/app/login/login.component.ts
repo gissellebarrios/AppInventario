@@ -1,6 +1,8 @@
 import { Component,OnInit} from '@angular/core';
 import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from './service/login.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 
@@ -11,22 +13,29 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule],
   standalone: true
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, routes: Router ){
+  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router ){
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password:['', Validators.required]
     });
     }
-    ngOnInit(): void {
-      
-    }
 
-  onSubmit(): void{
+  onSubmit(){
     if(this.loginForm.valid){
-    console.log(this.loginForm.value);
+      const {username, password} = this.loginForm.value;
+      this.loginService.login(username,password).subscribe(
+        (response) =>{
+          this.loginService.saveToken(response.token)
+          this.router.navigate(['/medicamentos']);
+        },
+        (error) => {
+          console.error('Login Failed', error);
+        }
+      )
+
     }
   }
 }

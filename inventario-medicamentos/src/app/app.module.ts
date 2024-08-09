@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,10 +13,11 @@ import { MovimientosComponent } from './movimientos/movimientos.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { AppRoutingModule } from './app.routes';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './register/register_user/register.component';
 import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
-import { RegisterService } from './register/service/register.service';
+import { InterceptorLoginService } from './login/service/login.interceptor';
+import { csrfInterceptor } from './csrf.interceptor';
 
 
 @NgModule({
@@ -42,7 +43,10 @@ import { RegisterService } from './register/service/register.service';
         NotificacionListComponent,
         RegisterComponent,
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: InterceptorLoginService, multi: true},
+        provideHttpClient(withInterceptors([csrfInterceptor]))
+    ],
     bootstrap: [AppComponent]
 })
 

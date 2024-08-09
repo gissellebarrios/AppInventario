@@ -5,7 +5,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { MovimientosComponent } from './movimientos/movimientos.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './register/register_user/register.component';
 import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
 
