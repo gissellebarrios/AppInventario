@@ -1,14 +1,22 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from rest_framework import permissions, status
+from rest_framework import permissions, status,serializers
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import Medicamento, Movimiento, Profile
-from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer
+from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer
+from django.middleware.csrf import get_token
+
+def token_view(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrfToken':csrf_token})
 
 
 def get_tokens_for_user(user):
@@ -20,7 +28,8 @@ def get_tokens_for_user(user):
     }
 
 class UserloginView(APIView):
-    serializer_class = Userserializer
+    permission_classes = [permissions.AllowAny]
+    serializer_class = Loginserializer
     def post(self, request, format = None):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -32,15 +41,19 @@ class UserloginView(APIView):
             return Response({ 'errors': {'non_fields_errors':['User or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400)
     
-class ProfileViewSet(APIView):
-    def post(self, request, format =None):
-        serializer_class = ProfileSerializer(data=request.data)
-        if serializer_class.is_valid():
-            serializer_class.save()
-            return Response({'Mensaje': 'Registro Exitoso!'}, status=status.HTTP_201_CREATED)
-        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+class ProfileViewSet(viewsets.ModelViewSet):
+        queryset = Profile.objects.all()
+        serializer_class = ProfileSerializer
+        permission_classes = [permissions.IsAuthenticated]
     
-
+class UserRegisterView(APIView):
+    def post(self, request):
+        serializer = Userserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'Mensaje': 'Usuario Creado con Exito!'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class MedicamentoViewSet(viewsets.ModelViewSet):
     queryset = Medicamento.objects.all()
     serializer_class = MedicamentoSerializer
@@ -53,3 +66,7 @@ class MovimientoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+from django.http import HttpResponseForbidden
+
+def my_csrf_failure_view(request, reason=""):
+    return HttpResponseForbidden("CSRF verification failed.")

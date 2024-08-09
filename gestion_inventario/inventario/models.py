@@ -11,18 +11,15 @@ class Profile(models.Model):
             (3, "Pasaporte"),
             (4, "Nit")
     ]
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, default='', on_delete= models.CASCADE, to_field='username')
     first_name = models.CharField(max_length=100, null= False, blank= True)
     last_name = models.CharField(max_length=100, null= False, blank= True)
     tipo_documento =models.IntegerField(choices=TIPO_DOC_CHOICES,default= 0)
     nit = models.CharField(max_length=20, null=False, blank= True)
     direccion = models.CharField(max_length=255, null=False, blank= True) 
     phone_number = models.CharField(max_length=15, blank=True, null= True)
-    email = models.CharField(max_length=255, blank=True, null=False)
-    clave = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='', related_name="clave")
 
     def __str__(self):
-        return self.user.username
+        return self.first_name
 
 class Medicamento(models.Model):
     nombre = models.CharField(max_length=100)
