@@ -18,3 +18,10 @@ export interface Medicamentos {
   fechacaducidad: string;
   lote: string;
  }
+
+ export interface MedicamentosResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Medicamentos[];
+}

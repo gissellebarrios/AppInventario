@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Medicamentos } from '../module/medicamentos.module';
+import { MedicamentosResponse } from '../module/medicamentos.module';
+import { LoginService } from '../../login/service/login.service';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -12,7 +15,11 @@ export class MedicamentosService {
   constructor(private http: HttpClient) { }
   
   getMedicamentos(): Observable<Medicamentos[]>{
-    return this.http.get<Medicamentos[]>(this.apiUrl);
+ 
+    return this.http.get<MedicamentosResponse>(this.apiUrl).pipe(
+      map(response => response.results)
+    )
+
   }
 
 addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
@@ -41,6 +48,8 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
   }
 
   getAll(): Observable<Medicamentos[]> {
-    return this.http.get<Medicamentos[]>(this.apiUrl);
+    return this.http.get<MedicamentosResponse>(this.apiUrl).pipe(
+      map(response => response.results)
+    )
   }
 }

@@ -7,10 +7,7 @@
         <button class="btn btn-primary" (click)="openModal()">Agregar Medicamento</button>
       </div>
 
-      <div *ngIf="medicamentos.length === 0" class="alert alert-info text-center">
-        No hay ningún dato registrado.
-      </div>
-      <table *ngIf="medicamentos.length > 0 " class="table table-bordered table-striped mt-3">
+      <table class="table table-bordered table-striped mt-3">
         <thead>
           <tr>
             <th>Nombre</th>

@@ -28,7 +28,7 @@ export class LoginComponent{
       const {username, password} = this.loginForm.value;
       this.loginService.login(username,password).subscribe(
         (response) =>{
-          this.loginService.saveToken(response.token)
+          this.loginService.saveTokens(response.access, response.refresh)
           this.router.navigate(['/medicamentos']);
         },
         (error) => {
