@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { ProfileService } from './service/profile.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
   imports: [ReactiveFormsModule],
   standalone: true
 })
-export class RegisterComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
 
   constructor(

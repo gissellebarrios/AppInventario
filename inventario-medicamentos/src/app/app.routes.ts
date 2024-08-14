@@ -8,12 +8,13 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register_user/register.component';
 import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
+import { ProfileComponent } from './register/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'medicamentos', component: MedicamentosComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'reportes', component: ReportesComponent },
-  //{ path: 'registros', component: RegistroMedicamentosComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'movimientos', component: MovimientosComponent },
   { path: 'estadisticas', component: EstadisticasComponent },
   { path: 'login', component: LoginComponent },

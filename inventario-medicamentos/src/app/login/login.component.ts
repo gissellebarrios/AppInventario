@@ -13,7 +13,7 @@ import { HttpHeaders } from '@angular/common/http';
   imports: [ReactiveFormsModule],
   standalone: true
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit{
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router ){
@@ -23,12 +23,14 @@ export class LoginComponent{
     });
     }
 
+    ngOnInit(): void {}
+    
   onSubmit(){
     if(this.loginForm.valid){
       const {username, password} = this.loginForm.value;
       this.loginService.login(username,password).subscribe(
         (response) =>{
-          this.loginService.saveTokens(response.access, response.refresh)
+          this.loginService.saveTokens(response.access, response.refresh, username)
           this.router.navigate(['/medicamentos']);
         },
         (error) => {
@@ -38,5 +40,6 @@ export class LoginComponent{
 
     }
   }
+
 }
 
