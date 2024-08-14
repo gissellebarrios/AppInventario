@@ -47,6 +47,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         permission_classes = [permissions.IsAuthenticated]
     
 class UserRegisterView(APIView):
+    permission_classes = [permissions.AllowAny]
     def post(self, request):
         serializer = Userserializer(data=request.data)
         if serializer.is_valid():
