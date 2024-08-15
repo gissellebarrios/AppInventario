@@ -7,7 +7,9 @@ import { LoginService } from './login.service';
 
 export class InterceptorLoginService implements HttpInterceptor{
 
-  private excludeUrls =['http://127.0.0.1:8000/api/register/']
+  private excludeUrls =['http://127.0.0.1:8000/api/register/',
+    'http://127.0.0.1:8000/api/empresas/'
+  ]
 
   constructor(private loginService: LoginService) { }
 

@@ -1,44 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from './service/register.service';
+import { EmpresasService } from '../../empresas.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  imports: [ReactiveFormsModule],
-  standalone: true
+  imports: [ReactiveFormsModule, CommonModule],
+  standalone: true,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  submitted = false;
+  empresas: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private registerService: RegisterService,
-    private router: Router
-  ){
-  this.registerForm = this.fb.group({
-    username: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
-    password:['', Validators.required],
-  });
-  }
-  onSubmit(){
-    this.submitted = true;
+    private router: Router,
+    private empresaService: EmpresasService
 
-    if(this.registerForm.invalid){
-      return;
-    }
-    this.registerService.register(this.registerForm.value).subscribe(
-      response => {
-        alert("Usuario Registrado con Exito")
-        this.router.navigate(['./']);
-      },
+  ){
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      password:['', Validators.required],
+      empresa: [null, Validators.required],
+    });
+   }
+
+  ngOnInit() {
+    this.empresaService.getEmpresas().subscribe(data => {
+      this.empresas = data;
+    });
+  }
+
+  onSubmit(){
+    if(this.registerForm.valid){
+      this.registerService.register(this.registerForm.value).subscribe(
+        response => {
+          alert("Usuario Registrado con Exito")
+          this.router.navigate(['./']);
+        },
       error => {
         console.error('Error en el registro del usuario',error)
       }
-    )   
+    )
+  }   
   }
 }
