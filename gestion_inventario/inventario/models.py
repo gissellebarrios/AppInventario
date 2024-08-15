@@ -1,6 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.conf import settings
+
+class Empresa(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+    
+
+class CustomUser(AbstractUser):
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, null=True, blank=True)
+    groups = models.ManyToManyField(
+        Group,
+        related_name="Grupo",  # Cambia related_name aquí
+        blank=True,
+        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+        related_query_name="user",
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name="Permisos",  # Cambia related_name aquí
+        blank=True,
+        help_text="Specific permissions for this user.",
+        related_query_name="user",
+    )
+
 
 
 class Profile(models.Model):
@@ -28,6 +54,8 @@ class Medicamento(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fechacaducidad = models.DateField()
     lote = models.CharField(max_length=50)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=1)
+
 
     def __str__(self):
         return self.nombre

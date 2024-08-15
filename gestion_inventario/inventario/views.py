@@ -10,8 +10,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-from .models import Medicamento, Movimiento, Profile
-from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer
+from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser
+from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer, EmpresaSerializer
 from django.middleware.csrf import get_token
 
 def token_view(request):
@@ -46,6 +46,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
         serializer_class = ProfileSerializer
         permission_classes = [permissions.IsAuthenticated]
     
+class EmpresaViewSet(viewsets.ModelViewSet):
+    queryset = Empresa.objects.all()
+    serializer_class = EmpresaSerializer
+    permission_classes =[permissions.AllowAny]
+
 class UserRegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request):
@@ -56,9 +61,16 @@ class UserRegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class MedicamentoViewSet(viewsets.ModelViewSet):
-    queryset = Medicamento.objects.all()
     serializer_class = MedicamentoSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Medicamento.objects.filter(empresa=self.request.user.empresa)
+    
+
+    def perform_create(self, serializer):
+        serializer.save(empresa=self.request.user.empresa)
+
 
 
 class MovimientoViewSet(viewsets.ModelViewSet):
