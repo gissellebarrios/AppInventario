@@ -4,7 +4,10 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.conf import settings
 
 class Empresa(models.Model):
+    codigo = models.CharField(max_length=50)
     nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=255)
+    telefono = models.CharField(max_length=15)
 
     def __str__(self):
         return self.nombre
@@ -68,3 +71,10 @@ class Movimiento(models.Model):
 
     def __str__(self):
         return f'{self.motivo} - {self.medicamento.nombre}'
+
+
+class Alertas(models.Model):
+    medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
+    umbral_stock = models.IntegerField()
+    activo = models.BooleanField(default=True)
+

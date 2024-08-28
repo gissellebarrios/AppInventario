@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Medicamento,Movimiento,Profile, Empresa, CustomUser
+from .models import Medicamento,Movimiento,Profile, Empresa, CustomUser, Alertas
 from django.contrib.auth.hashers import make_password
 
 
@@ -27,6 +27,7 @@ class EmpresaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class Userserializer(serializers.ModelSerializer):
+    empresa = serializers.PrimaryKeyRelatedField(queryset=Empresa.objects.all())
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'password', 'email','empresa']
@@ -35,8 +36,7 @@ class Userserializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        empresa_data = validated_data.pop('empresa')
-        empresa, created = Empresa.objects.get_or_create(**empresa_data)
+        empresa = validated_data.pop('empresa')
         user = CustomUser.objects.create_user(
             username= validated_data['username'],
             email= validated_data['email'],
@@ -50,7 +50,11 @@ class Loginserializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['username', 'password']
 
-
+class Alertaserializer(serializers.ModelSerializer):
+    medicamento_nombre = serializers.CharField(source='medicamento.nombre', read_only=True)
+    class Meta:
+        model = Alertas
+        fields = ['id','medicamento','medicamento_nombre','umbral_stock']
 
 
     

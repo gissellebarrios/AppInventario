@@ -5,13 +5,13 @@ from django.contrib.auth import authenticate
 from rest_framework import permissions, status,serializers
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser
-from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer, EmpresaSerializer
+from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
+from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer
 from django.middleware.csrf import get_token
 
 def token_view(request):
@@ -77,6 +77,15 @@ class MovimientoViewSet(viewsets.ModelViewSet):
     queryset = Movimiento.objects.all()
     serializer_class = MovimientoSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class AlertasViewSet(viewsets.ModelViewSet):
+    queryset = Alertas.objects.all()
+    serializer_class = Alertaserializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class AlertaListView(generics.ListAPIView):
+    queryset = Alertas.objects.select_related('medicamento').all()
+    serializer_class = Alertaserializer
 
 
 from django.http import HttpResponseForbidden

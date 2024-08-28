@@ -8,6 +8,7 @@ router.register(r'medicamentos', views.MedicamentoViewSet, basename='medicamento
 router.register(r'movimientos', views.MovimientoViewSet)
 router.register(r'profile', views.ProfileViewSet)
 router.register(r'empresas', views.EmpresaViewSet)
+router.register(r'alertas', views.AlertasViewSet)
 
 
 urlpatterns = [
