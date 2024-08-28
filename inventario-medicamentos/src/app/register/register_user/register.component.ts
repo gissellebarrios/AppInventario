@@ -1,9 +1,10 @@
 import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators, AsyncValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from './service/register.service';
-import { EmpresasService } from '../../empresas.service';
+import { EmpresasService } from '../../empresa/services/empresas.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
   ){
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       password:['', Validators.required],
       empresa: [null, Validators.required],
     });
