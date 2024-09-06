@@ -26,28 +26,27 @@ class EmpresaSerializer(serializers.ModelSerializer):
         model = Empresa     
         fields = '__all__'
 
-class Userserializer(serializers.ModelSerializer):
-    empresa = serializers.PrimaryKeyRelatedField(queryset=Empresa.objects.all())
+
+class Registerserializer(serializers.ModelSerializer):
+    empresa = serializers.PrimaryKeyRelatedField(queryset=Empresa.objects.all(), required=True)
+
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'password', 'email','empresa']
+        model = User
+        fields = ['username', 'email', 'password', 'empresa']
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password':{'write_only': True}
         }
 
-    def create(self, validated_data):
-        empresa = validated_data.pop('empresa')
-        user = CustomUser.objects.create_user(
-            username= validated_data['username'],
-            email= validated_data['email'],
-            password= validated_data['password'],
-            empresa = empresa
-        )
+    def create(self,validated_data):
+        empresa = validated_data.pop('empresa', None)
+        user = User.objects.create_user(**validated_data)
+        if empresa:
+            CustomUser.objects.create(usuario=user, empresa = empresa)
         return user
         
 class Loginserializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['username', 'password']
 
 class Alertaserializer(serializers.ModelSerializer):

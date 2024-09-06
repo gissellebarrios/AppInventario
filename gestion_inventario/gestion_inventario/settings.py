@@ -226,4 +226,4 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:4200',
 
 CSRF_FAILURE_VIEW = 'inventario.views.my_csrf_failure_view'
 
-AUTH_USER_MODEL = 'inventario.CustomUser'
+#AUTH_USER_MODEL = 'inventario.CustomUser'

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser, Group, Permission
+#from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.conf import settings
 
 class Empresa(models.Model):
@@ -13,22 +13,12 @@ class Empresa(models.Model):
         return self.nombre
     
 
-class CustomUser(AbstractUser):
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, null=True, blank=True)
-    groups = models.ManyToManyField(
-        Group,
-        related_name="Grupo",  # Cambia related_name aquí
-        blank=True,
-        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
-        related_query_name="user",
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="Permisos",  # Cambia related_name aquí
-        blank=True,
-        help_text="Specific permissions for this user.",
-        related_query_name="user",
-    )
+class CustomUser(models.Model):
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.empresa.nombre if self.empresa else "Sin empresa"}'
 
 
 
@@ -46,6 +36,7 @@ class Profile(models.Model):
     nit = models.CharField(max_length=20, null=False, blank= True)
     direccion = models.CharField(max_length=255, null=False, blank= True) 
     phone_number = models.CharField(max_length=15, blank=True, null= True)
+    usuarioperfil = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name

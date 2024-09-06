@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
-from .serializers import MedicamentoSerializer, MovimientoSerializer, Userserializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer
+from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
 from django.middleware.csrf import get_token
 
 def token_view(request):
@@ -54,7 +54,7 @@ class EmpresaViewSet(viewsets.ModelViewSet):
 class UserRegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request):
-        serializer = Userserializer(data=request.data)
+        serializer = Registerserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'Mensaje': 'Usuario Creado con Exito!'}, status=status.HTTP_201_CREATED)
@@ -65,11 +65,17 @@ class MedicamentoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Medicamento.objects.filter(empresa=self.request.user.empresa)
+        if hasattr(self.request.user, 'CustomUser'):
+            return Medicamento.objects.filter(empresa=self.request.User.CustomUser.empresa)
+        else:
+            return Medicamento.objects.none()
     
 
     def perform_create(self, serializer):
-        serializer.save(empresa=self.request.user.empresa)
+        if hasattr(self.request.user, 'CustomUser') and self.request.user.CustomUser.empresa:
+            serializer.save(empresa=self.request.CustomUser.empresa)
+        else:
+            raise serializers.ValidationError("El usuario no tiene una empresa asociada.")
 
 
 
