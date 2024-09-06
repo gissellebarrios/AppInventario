@@ -39,8 +39,13 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
     });
   }
 
+  MovMedicamento(id: number, updateData:any): Observable<any>{
+    return this.http.put(`${this.apiUrl}/{id}`,updateData);
+  }
+    
+
   deleteMedicamento(id: number): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/${id}/`,{
+    return this.http.delete(`${this.apiUrl}/{id}/`,{
       headers: new HttpHeaders({
         'content-Type':'application/json'
       })

@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MedicamentosService } from '../medicamentos/service/medicamentos.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-movimientos',
   templateUrl: './movimientos.component.html',
-  styleUrls: ['./movimientos.component.css']
+  styleUrls: ['./movimientos.component.css'],
+  imports: [ReactiveFormsModule, CommonModule],
+  standalone: true
 })
 export class MovimientosComponent implements OnInit {
   medicamentos: any[] = [];
   selectedMedicamento: any = {};
   movimientoForm: FormGroup;
+
+  motivos = ['Venta','Reabastecimiento','Donación','Vencimiento']
 
   constructor(
     private medicamentosService: MedicamentosService,
@@ -48,8 +53,11 @@ export class MovimientosComponent implements OnInit {
   onSubmit(): void {
     if (this.movimientoForm.valid) {
       const movimiento = this.movimientoForm.value;
-      // Handle the form submission logic here, like saving to a service or backend
-      console.log(movimiento);
+      this.selectedMedicamento.cantidad = this.selectedMedicamento.cantidad - movimiento.cantidad
+      this.medicamentosService.MovMedicamento(this.selectedMedicamento.id, { cantidad: this.selectedMedicamento.cantidad })
+      .subscribe(()=> {
+        console.log('Medicamento actualizado con éxito');
+      })
       this.modalService.dismissAll();
     }
   }

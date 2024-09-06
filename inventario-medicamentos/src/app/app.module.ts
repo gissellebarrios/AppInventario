@@ -25,7 +25,6 @@ import { csrfInterceptor } from './csrf.interceptor';
         AppComponent,
         ReportesComponent,
         MedicamentosComponent,
-        MovimientosComponent,
         EstadisticasComponent,
     ],
     imports: [
@@ -42,6 +41,7 @@ import { csrfInterceptor } from './csrf.interceptor';
         AlertSettingsComponent,
         NotificacionListComponent,
         RegisterComponent,
+        MovimientosComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorLoginService, multi: true},
