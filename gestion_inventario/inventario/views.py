@@ -65,17 +65,17 @@ class MedicamentoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        if hasattr(self.request.user, 'CustomUser'):
-            return Medicamento.objects.filter(empresa=self.request.User.CustomUser.empresa)
-        else:
-            return Medicamento.objects.none()
+        user = self.request.user
+        if not hasattr(user, 'customuser') or not user.customuser.empresa:
+            raise PermissionDenied('El usuario no tiene empresa asociada')
+        return Medicamento.objects.filter(empresa=user.customuser.empresa)
     
 
     def perform_create(self, serializer):
-        if hasattr(self.request.user, 'CustomUser') and self.request.user.CustomUser.empresa:
-            serializer.save(empresa=self.request.CustomUser.empresa)
-        else:
-            raise serializers.ValidationError("El usuario no tiene una empresa asociada.")
+        user = self.request.user
+        if not hasattr(user, 'customuser') or not user.customuser.empresa:
+            raise PermissionDenied('El usuario no tiene una empresa asociada.')
+        serializer.save(empresa=user.customuser.empresa)
 
 
 
