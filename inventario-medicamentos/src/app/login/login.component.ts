@@ -15,6 +15,8 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit{
   loginForm: FormGroup;
+  errorMessage: string = '';
+
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router ){
     this.loginForm = this.fb.group({
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit{
           this.router.navigate(['/medicamentos']);
         },
         (error) => {
+          this.errorMessage = 'Credenciales incorrectas';
           console.error('Login Failed', error);
         }
       )

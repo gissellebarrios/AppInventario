@@ -31,7 +31,10 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
     });    
   }
   updateMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
-    const url = `${this.apiUrl}/${medicamento.id}/`;
+   if(!medicamento.id){
+    throw new Error('El id del medicamento es necesario para la actualizacion');
+   } 
+   const url = `${this.apiUrl}${medicamento.id}/`; 
     return this.http.put<Medicamentos>(url, medicamento,{
       headers: new HttpHeaders({
         'content-Type':'application/json'
@@ -44,12 +47,13 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
   }
     
 
-  deleteMedicamento(id: number): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/{id}/`,{
-      headers: new HttpHeaders({
-        'content-Type':'application/json'
-      })
-    });
+  deleteMedicamento(medicamento: Medicamentos): Observable<void> {
+    if (!medicamento.id) {
+      throw new Error('El ID del medicamento es necesario para la eliminación');
+    }
+    const url = `${this.apiUrl}${medicamento.id}/`;
+    console.log('URL de eliminación:', url); 
+    return this.http.delete<void>(url);
   }
 
   getAll(): Observable<Medicamentos[]> {

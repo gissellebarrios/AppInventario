@@ -1,0 +1,6 @@
+<h2>Alertas de Stock Bajo</h2>
+<ul>
+  <li *ngFor="let alerta of alertas">
+    {{ alerta.nombre }} - {{ alerta.codigo }} - Cantidad: {{ alerta.cantidad }} - Umbral: {{ alerta.umbral_stock }}
+  </li>
+</ul>

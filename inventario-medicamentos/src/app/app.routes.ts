@@ -9,18 +9,19 @@ import { RegisterComponent } from './register/register_user/register.component';
 import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-settings.component';
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
 import { ProfileComponent } from './register/profile/profile.component';
+import { AuthGuard } from './authguard/auth.guard';
 
 export const routes: Routes = [
-  { path: 'medicamentos', component: MedicamentosComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard] },
   { path: 'reportes', component: ReportesComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'movimientos', component: MovimientosComponent },
-  { path: 'estadisticas', component: EstadisticasComponent },
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
+  { path: 'movimientos', component: MovimientosComponent,canActivate:[AuthGuard] },
+  { path: 'estadisticas', component: EstadisticasComponent, canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'configuracionalerta', component: AlertSettingsComponent },
-  { path: 'listalertas', component: NotificacionListComponent }
+  { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard] },
+  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard] }
 ];
 
 @NgModule({

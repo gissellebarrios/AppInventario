@@ -61,23 +61,40 @@ constructor(
   saveMedicamento() {
     if(this.medicamentosForm.valid){
       const medicamentoData = this.medicamentosForm.value;
-      if (this.editMode){
+      if (this.editMode && this.selectedMedicamento.id){
+        medicamentoData.id = this.selectedMedicamento.id;
         this.medicamentosService.updateMedicamento(medicamentoData).subscribe(() => {
           this.loadMedicamentos();
-        });
+          this.modalService.dismissAll();
+        },
+      error => {
+        console.error('Error al actualizar medicamento:', error);
+      });
       } else {
           this.medicamentosService.addMedicamento(medicamentoData).subscribe(() =>{
             this.loadMedicamentos();
-          });
+            this.modalService.dismissAll();
+          },
+        error => {
+          console.error('Error al agregar medicamento:', error);
+        });
       }
-    //window.location.reload();
-    this.modalService.dismissAll();
     }
   }
 
-  deleteMedicamento(id: number){
-      this.medicamentosService.deleteMedicamento(id).subscribe(() => {
-        this.loadMedicamentos();
-      });
+  deleteMedicamento(id: number) {
+    const medicamento = this.medicamentos.find(m => m.id === id);
+    if (medicamento) {
+      this.medicamentosService.deleteMedicamento(medicamento).subscribe(
+        () => {
+          this.loadMedicamentos(); // Recarga la lista de medicamentos
+        },
+        error => {
+          console.error('Error al eliminar medicamento:', error);
+        }
+      );
+    } else {
+      console.error('Medicamento no encontrado');
     }
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, catchError, throwError, tap } from 'rxjs';
 
 
 @Injectable({
@@ -13,20 +13,33 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(username:string, password:string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, {username,password});
+    return this.http.post<any>(`${this.apiUrl}`, {username,password})
+    .pipe(
+      tap(response => {
+        this.saveTokens(response.access, response.refresh,username);
+      }),
+      catchError(this.handleError)
+    )
   }
-
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError(error);
+  }
   saveTokens(access: string, refresh: string, username:string) {
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
     localStorage.setItem('username', username); 
   }
-  getUsername() {
+  getUsername(): string | null {
     return localStorage.getItem('username'); // Obtener el nombre de usuario
   }
 
-  getToken(){
+  getToken(): string | null {
     return localStorage.getItem('access');
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refresh');
   }
 
   logout(){
@@ -37,9 +50,42 @@ export class LoginService {
   getProfile(): Observable<any> {
     const token = this.getToken();
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.get<any>(this.profileUrl, { headers });
+    return this.http.get<any>(this.profileUrl, { headers })
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
+  isauthenticated(): boolean{
+    return !!localStorage.getItem('access');
+  }
+
+  refreshToken(): Observable<any> {
+    const refresh = this.getRefreshToken();
+    if (refresh) {
+      return this.http.post<any>(this.refreshUrl, { refresh })
+        .pipe(
+          tap(response => {
+            // Guardar el nuevo token de acceso
+            localStorage.setItem('access', response.access);
+          }),
+          catchError(this.handleError)  // Manejar errores de renovación
+        );
+    } else {
+      return throwError('No refresh token found');
+    }
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+
+    const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+    const expiry = tokenPayload.exp;
+    const now = Math.floor(new Date().getTime() / 1000);
+
+    return now > expiry;
+  }
 }
 
 
