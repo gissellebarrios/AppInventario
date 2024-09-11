@@ -15,6 +15,13 @@
                 </option>
               </select>
             </div>
+            <div>
+              <label for="rol">Rol</label>
+              <select formControlName="rol" id="rol" class="form-control">
+                <option value="admin">Administrador</option>
+                <option value="emp">Empleado</option>
+              </select>
+            </div>
             <br/>
             <div class="form-floating mb-3">
               <input class="form-control" id="email" type="email" placeholder="email" formControlName="email" />
@@ -32,11 +39,6 @@
               <button class="btn btn-primary btn-block" type="submit">Register</button>
             </div>
           </form>
-        </div>
-        <div class="card-footer text-center py-3">
-          <div class="small">
-            <a href="/login">Already registered? Login here</a>
-          </div>
         </div>
       </div>
     </div>

@@ -29,6 +29,7 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.required],
       password:['', Validators.required],
       empresa: [null, Validators.required],
+      rol:['', Validators.required],
     });
    }
 
@@ -46,7 +47,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['./']);
         },
       error => {
-        console.error('Error en el registro del usuario',error)
+        console.error('Error en el registro del usuario:',error)
       }
     )
   }   

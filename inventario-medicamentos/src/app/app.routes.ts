@@ -10,9 +10,12 @@ import { AlertSettingsComponent } from './notificaciones/alert-settings/alert-se
 import { NotificacionListComponent } from './notificaciones/notificacion-list/notificacion-list.component';
 import { ProfileComponent } from './register/profile/profile.component';
 import { AuthGuard } from './authguard/auth.guard';
+import { InicioComponent } from './inicio/inicio.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path:'inicio', component: InicioComponent},
+  { path: '**', redirectTo: '/inicio' },
   { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard] },
   { path: 'reportes', component: ReportesComponent },
   { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
