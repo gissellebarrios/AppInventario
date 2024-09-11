@@ -16,6 +16,7 @@ class Empresa(models.Model):
 class CustomUser(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     usuario = models.OneToOneField(User,on_delete=models.CASCADE)
+    rol = models.CharField(max_length=50, choices=[('admin', 'Administrador'),('emp','Empleado')])
 
     def __str__(self):
         return f'{self.usuario.username} - {self.empresa.nombre if self.empresa else "Sin empresa"}'

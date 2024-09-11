@@ -29,19 +29,21 @@ class EmpresaSerializer(serializers.ModelSerializer):
 
 class Registerserializer(serializers.ModelSerializer):
     empresa = serializers.PrimaryKeyRelatedField(queryset=Empresa.objects.all(), required=True)
+    rol = serializers.ChoiceField(choices =[('admin', 'Administrador'),('emp','Empleado')])
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'empresa']
+        fields = ['username', 'email', 'password', 'empresa','rol']
         extra_kwargs = {
             'password':{'write_only': True}
         }
 
     def create(self,validated_data):
         empresa = validated_data.pop('empresa', None)
+        rol = validated_data.pop('rol',None)
         user = User.objects.create_user(**validated_data)
-        if empresa:
-            CustomUser.objects.create(usuario=user, empresa = empresa)
+        if empresa and rol:
+            CustomUser.objects.create(usuario=user, empresa = empresa, rol = rol)
         return user
         
 class Loginserializer(serializers.ModelSerializer):
