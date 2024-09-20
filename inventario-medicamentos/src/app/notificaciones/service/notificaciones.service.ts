@@ -25,4 +25,7 @@ export class NotificacionesService {
   update(id: number, alerta: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, alerta);
   }
+  getBajoStock():Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}bajo-stock/`);
+  }
 }

@@ -28,7 +28,7 @@ export class AlertSettingsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.alertasForm = this.fb.group({
-      medicamento: ['', Validators.required],
+      medicamento: [{value:'', disabled: this.isEdite}, Validators.required],
       umbral_stock: ['', [Validators.required, Validators.min(1)]]
     });
   }
@@ -54,14 +54,17 @@ export class AlertSettingsComponent implements OnInit {
     if(alerta){
       this.isEdite = true;
       this.selectedAlerta = alerta;
+      console.log('Alerta:', alerta);  
       this.alertasForm.patchValue({
-        medicamento: alerta.medicamento.id,
+        medicamento: alerta.medicamento,
         umbral_stock: alerta.umbral_stock
       });
+      this.alertasForm.get('medicamento')?.disable();
     }
     else {
       this.isEdite = false;
       this.alertasForm.reset();
+      this.alertasForm.get('medicamento')?.enable();
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }

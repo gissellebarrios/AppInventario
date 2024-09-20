@@ -53,12 +53,23 @@ export class MovimientosComponent implements OnInit {
   onSubmit(): void {
     if (this.movimientoForm.valid) {
       const movimiento = this.movimientoForm.value;
-      this.selectedMedicamento.cantidad = this.selectedMedicamento.cantidad - movimiento.cantidad
-      this.medicamentosService.MovMedicamento(this.selectedMedicamento.id, { cantidad: this.selectedMedicamento.cantidad })
-      .subscribe(()=> {
-        console.log('Medicamento actualizado con éxito');
-      })
-      this.modalService.dismissAll();
+      console.log('Medicamento seleccionado:', this.selectedMedicamento);
+      if(movimiento.cantidad > this.selectedMedicamento.cantidad){
+        console.error('La cantidad a mover excede el stock disponible');
+        return;
+      }
+      if(this.selectedMedicamento && this.selectedMedicamento.id){
+        this.selectedMedicamento.cantidad -= movimiento.cantidad;
+        this.medicamentosService.MovMedicamento(this.selectedMedicamento)
+        .subscribe(()=>{
+            console.log('Medicamento actualizado con éxito');
+          }, error => {
+              console.error('Error al actualizar el medicamento', error);
+          });
+          this.modalService.dismissAll();
+        } else {
+          console.error('El id del medicamento es necesario para la actualizacion');
+        }
     }
   }
 }

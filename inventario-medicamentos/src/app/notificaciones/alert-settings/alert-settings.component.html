@@ -36,7 +36,7 @@
       <form [formGroup]="alertasForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="medicamento">Medicamento</label>
-          <select class="form-control" id="medicamento" formControlName="medicamento" [disabled]="isEdite">
+          <select class="form-control" id="medicamento" formControlName="medicamento">
             <option *ngFor="let medicamento of medicamentos" [value]="medicamento.id">
               {{medicamento.nombre}}
             </option>

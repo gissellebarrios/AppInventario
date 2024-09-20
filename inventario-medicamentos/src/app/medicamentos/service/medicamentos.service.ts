@@ -42,8 +42,17 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
     });
   }
 
-  MovMedicamento(id: number, updateData:any): Observable<any>{
-    return this.http.put(`${this.apiUrl}/{id}`,updateData);
+  MovMedicamento(medicamento:Medicamentos): Observable<Medicamentos>{
+    if (!medicamento.id) {
+      throw new Error('El id del medicamento es necesario para la actualización');
+    }
+    console.log('Update data:', medicamento);
+    const url = `${this.apiUrl}${medicamento.id}/`;
+    return this.http.put<Medicamentos>(url,medicamento, {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    });
   }
     
 
