@@ -9,6 +9,8 @@ import { Alertas, AlertasResponse } from '../module/notificaciones.module';
 })
 export class NotificacionesService {
   private apiUrl = "http://127.0.0.1:8000/api/alertas/";
+  private apiUrlbj = "http://127.0.0.1:8000/api/bajo-stock/"
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Alertas[]>{
@@ -26,6 +28,6 @@ export class NotificacionesService {
     return this.http.put<any>(`${this.apiUrl}/${id}`, alerta);
   }
   getBajoStock():Observable<any[]>{
-    return this.http.get<any[]>(`${this.apiUrl}bajo-stock/`);
+    return this.http.get<any[]>(this.apiUrlbj);
   }
 }
