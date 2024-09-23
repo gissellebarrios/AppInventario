@@ -3,12 +3,13 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework import permissions, status,serializers
-from rest_framework.views import APIView
+from rest_framework.views import APIView, View
 from django.contrib.auth.models import User
 from rest_framework import viewsets, generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.db.models import Sum
 
 from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
 from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
@@ -89,9 +90,21 @@ class AlertasViewSet(viewsets.ModelViewSet):
     serializer_class = Alertaserializer
     permission_classes = [permissions.IsAuthenticated]
 
-class AlertaListView(generics.ListAPIView):
-    queryset = Alertas.objects.select_related('medicamento').all()
-    serializer_class = Alertaserializer
+class AlertaListView(APIView):
+    def get(self, request):
+        alertas = Alertas.objects.filter(activo=True)
+        notificaciones = []
+
+        for alerta in alertas:
+            medicamento = alerta.medicamento
+            cantidad_actual = medicamento.cantidad
+            if medicamento.cantidad < alerta.umbral_stock:
+                notificaciones.append({
+                    'nombre': medicamento.nombre,
+                    'stockactual':cantidad_actual,
+                    'umbral_stock':alerta.umbral_stock
+                })
+        return JsonResponse(notificaciones, safe=False)
 
 
 from django.http import HttpResponseForbidden

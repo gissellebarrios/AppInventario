@@ -55,7 +55,7 @@ class Alertaserializer(serializers.ModelSerializer):
     medicamento_nombre = serializers.CharField(source='medicamento.nombre', read_only=True)
     class Meta:
         model = Alertas
-        fields = ['id','medicamento','medicamento_nombre','umbral_stock']
+        fields = ['id','medicamento','medicamento_nombre','umbral_stock','cantidad']
 
 
     
