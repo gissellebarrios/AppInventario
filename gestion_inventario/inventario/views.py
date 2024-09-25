@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Sum
+from rest_framework.exceptions import NotFound
 
 from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
 from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
@@ -46,6 +47,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
         queryset = Profile.objects.all()
         serializer_class = ProfileSerializer
         permission_classes = [permissions.IsAuthenticated]
+
+        def get_queryset(self):
+           return Profile.objects.filter(usuarioperfil=self.request.user)
+
+        def perform_create(self,serializer):
+            serializer.save(usuarioperfil=self.request.user)
+
+
     
 class EmpresaViewSet(viewsets.ModelViewSet):
     queryset = Empresa.objects.all()

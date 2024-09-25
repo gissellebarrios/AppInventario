@@ -17,9 +17,10 @@ class MovimientoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='usuarioperfil.username',read_only=True)
     class Meta:
         model = Profile     
-        fields = '__all__'
+        fields = ['first_name', 'last_name', 'tipo_documento', 'nit', 'direccion', 'phone_number', 'username']
 
 class EmpresaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,7 +56,7 @@ class Alertaserializer(serializers.ModelSerializer):
     medicamento_nombre = serializers.CharField(source='medicamento.nombre', read_only=True)
     class Meta:
         model = Alertas
-        fields = ['id','medicamento','medicamento_nombre','umbral_stock','cantidad']
+        fields = ['id','medicamento','medicamento_nombre','umbral_stock']
 
 
     

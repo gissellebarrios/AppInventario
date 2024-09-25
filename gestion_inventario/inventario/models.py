@@ -69,5 +69,5 @@ class Alertas(models.Model):
     medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
     umbral_stock = models.IntegerField()
     activo = models.BooleanField(default=True)
-    cantidad = models.IntegerField()
+
 
