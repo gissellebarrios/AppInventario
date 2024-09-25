@@ -17,7 +17,8 @@
         <td>{{ medicamento.precio }}</td>
         <td>{{ medicamento.cantidad }}</td>
         <td>
-          <button class="btn btn-primary" (click)="openModal(movimientoModal, medicamento)">Registrar Movimiento</button>
+          <button class="btn btn-primary" (click)="openModal(movimientoModal, medicamento)">Registrar</button>
+          <button class="btn btn-success" [routerLink]="['/historial-movimientos',medicamento.id]">Historial</button>
         </td>
       </tr>
     </tbody>

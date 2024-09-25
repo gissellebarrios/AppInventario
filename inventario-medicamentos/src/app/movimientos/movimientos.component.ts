@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MedicamentosService } from '../medicamentos/service/medicamentos.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-movimientos',
   templateUrl: './movimientos.component.html',
   styleUrls: ['./movimientos.component.css'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   standalone: true
 })
 export class MovimientosComponent implements OnInit {
@@ -54,22 +55,37 @@ export class MovimientosComponent implements OnInit {
     if (this.movimientoForm.valid) {
       const movimiento = this.movimientoForm.value;
       console.log('Medicamento seleccionado:', this.selectedMedicamento);
-      if(movimiento.cantidad > this.selectedMedicamento.cantidad){
-        console.error('La cantidad a mover excede el stock disponible');
-        return;
-      }
-      if(this.selectedMedicamento && this.selectedMedicamento.id){
-        this.selectedMedicamento.cantidad -= movimiento.cantidad;
-        this.medicamentosService.MovMedicamento(this.selectedMedicamento)
-        .subscribe(()=>{
-            console.log('Medicamento actualizado con éxito');
-          }, error => {
-              console.error('Error al actualizar el medicamento', error);
-          });
-          this.modalService.dismissAll();
-        } else {
-          console.error('El id del medicamento es necesario para la actualizacion');
+      if(movimiento.motivo === 'Venta'|| movimiento.motivo === 'Vencimiento'){
+        if(movimiento.cantidad > this.selectedMedicamento.cantidad){
+          console.error('La cantidad a mover excede el stock disponible');
+          return;
         }
+      }
+      if (movimiento.motivo === 'Venta' || movimiento.motivo === 'Vencimiento'){
+        this.selectedMedicamento.cantidad -= movimiento.cantidad;
+      } else if(movimiento.motivo === 'Reabastecimiento' || movimiento.motivo === 'Donacion') {
+        this.selectedMedicamento.cantidad += movimiento.cantidad;
+      }
+      const movimientoData = {
+        medicamento: this.selectedMedicamento.id,
+        cantidad: movimiento.cantidad,
+        fecha:movimiento.fecha,
+        motivo:movimiento.motivo
+      };
+
+      this.medicamentosService.registerMovimiento(movimientoData)
+        .subscribe(()=>{
+          console.log('Movimiento registrado con éxito');
+          this.medicamentosService.MovMedicamento(this.selectedMedicamento)
+          .subscribe(()=>{
+              console.log('Medicamento actualizado con éxito');
+            }, error => {
+                console.error('Error al actualizar el medicamento', error);
+            });
+            this.modalService.dismissAll();
+          }, error => {
+            console.error('El id del medicamento es necesario para la actualizacion');
+      });
     }
   }
 }

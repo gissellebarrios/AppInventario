@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Medicamentos } from '../module/medicamentos.module';
 import { MedicamentosResponse } from '../module/medicamentos.module';
-import { LoginService } from '../../login/service/login.service';
+import { Movimiento } from '../../movimientos/module/movimiento.module';
 import { map } from 'rxjs/operators';
 
 
@@ -54,8 +54,16 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
       })
     });
   }
-    
 
+  registerMovimiento(movimientoData: any): Observable<any> {
+    return this.http.post<any>('http://127.0.0.1:8000/api/movimientos/', movimientoData);
+  }
+
+  getHistorialMovimientos(medicamentoId: number): Observable<Movimiento[]> {
+    const url = `http://127.0.0.1:8000/api/movimientos/?medicamento=${medicamentoId}`;
+    return this.http.get<Movimiento[]>(url);
+  }
+  
   deleteMedicamento(medicamento: Medicamentos): Observable<void> {
     if (!medicamento.id) {
       throw new Error('El ID del medicamento es necesario para la eliminación');

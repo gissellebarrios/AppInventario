@@ -11,45 +11,57 @@ import { ProfileService } from './service/profile.service';
   standalone: true
 })
 export class ProfileComponent implements OnInit {
-  profileForm: FormGroup;
+  profileForm!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private profileService: ProfileService,
-  ){
-  this.profileForm = this.fb.group({
-    username: [{value:'', disabled: true}],
-    firts_name: ['', Validators.required],
-    last_name: ['', Validators.required],
-    tipo_documento: ['', Validators.required],
-    nit: ['', Validators.required],
-    direccion: ['', Validators.required],
-    phone_number: ['', [Validators.required, Validators.pattern('[^[0-9]{10}$')]],
-  });
+  constructor(private fb: FormBuilder,private profileService: ProfileService){
+    this.profileForm = this.fb.group({
+      username: [{value: '', disabled: true}], 
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      tipo_documento: [0, Validators.required],
+      nit: ['', Validators.required],
+      direccion: ['', Validators.required],
+      phone_number: ['', Validators.required],
+    });
   }
-ngOnInit() {
-  this.profileService.getProfile().subscribe(
-    (data) => {
-      this.profileForm.patchValue(data);
-    },
-    (error) => {
-      console.error('Error al obtener el perfil:', error);
-    }
-  )
-}
 
-  onSubmit(){
+  ngOnInit(): void {  
+    this.loadProfile();
+  }
+
+  loadProfile(): void{
+    this.profileService.getProfile().subscribe(
+      (data:any) => {
+        if(data){
+          const profileData =data[0];
+          this.profileForm.patchValue(profileData);
+        }
+        else {
+          console.log('No se encontro el perfil del usuario.');
+        }
+      },
+      error => {
+        console.error('Error al obtener el perfil:', error);
+      }
+    );
+  }
+
+
+  onSubmit() {
     if(this.profileForm.valid){
-      this.profileService.updateProfile(this.profileForm.getRawValue()).subscribe(
-        (response) => {
-          console.log('Perfil actualizado con éxito:', response);
-          alert('Perfil Actualizado con éxito');
+      this.profileService.createProfile(this.profileForm.value).subscribe(
+        response => {
+          console.log('Perfil creado con éxito:', response);
+          alert('Perfil Creado con éxito');
         },
         error => {
-          console.error('Error al actualizar el perfil',error);
-          alert('Hubo un error al actualizar el perfil');
+          console.error('Error al Creado el perfil',error);
+          alert('Hubo un error al Creado el perfil');
         }
       );
+    }
+    else{
+      console.log('El formulario no es valido', this.profileForm.errors);
     }
   }
 }

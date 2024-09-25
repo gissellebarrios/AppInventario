@@ -71,6 +71,9 @@ export class AlertSettingsComponent implements OnInit {
 
   onSubmit(): void {
     if (this.alertasForm.valid) {
+      if(this.isEdite){
+        this.alertasForm.get('medicamento')?.enable();
+      }
       const alertaData = {
         medicamento: this.alertasForm.value.medicamento,
         umbral_stock: this.alertasForm.value.umbral_stock
@@ -85,6 +88,9 @@ export class AlertSettingsComponent implements OnInit {
           this.loadAlertas();
           this.modalService.dismissAll();
         });
+      }
+      if(this.isEdite){
+        this.alertasForm.get('medicamento')?.disable();
       }
     }
   }

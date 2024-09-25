@@ -11,6 +11,7 @@ import { NotificacionListComponent } from './notificaciones/notificacion-list/no
 import { ProfileComponent } from './register/profile/profile.component';
 import { AuthGuard } from './authguard/auth.guard';
 import { InicioComponent } from './inicio/inicio.component';
+import { HistorialMovimientoComponent } from './movimientos/historial-movimiento/historial-movimiento.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,7 +25,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard] },
-  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard] }
+  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard] },
+  { path: 'historial-movimientos/:id', component:HistorialMovimientoComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

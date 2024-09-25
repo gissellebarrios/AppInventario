@@ -25,4 +25,5 @@ export class NotificacionListComponent implements OnInit {
       this.notifications = data;
     });
   }
+  
 }
