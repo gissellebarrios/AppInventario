@@ -18,4 +18,5 @@ urlpatterns = [
     path('login/', views.UserloginView.as_view(), name='login'),
     path('register/', views.UserRegisterView.as_view(), name='register'),
     path('bajo-stock/', views.AlertaListView.as_view(), name='alertas-bajo-stock'),
+    path('api/user-profile/', views.UserProfileView.as_view(), name='user-profile')
 ]

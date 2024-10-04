@@ -16,6 +16,7 @@ from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alerta
 from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
 from django.middleware.csrf import get_token
 
+
 def token_view(request):
     csrf_token = get_token(request)
     return JsonResponse({'csrfToken':csrf_token})
@@ -37,8 +38,15 @@ class UserloginView(APIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
+            try:
+                custom_user = user.customuser
+                rol = custom_user.rol
+                print(f"rol:{rol}")
+            except CustomUser.DoesNotExist:
+                rol = None
+
             token =get_tokens_for_user(user)
-            return Response({ 'token': token, 'msg':'Login success'}, status=status.HTTP_200_OK)
+            return Response({ 'token': token, 'msg':'Login success', 'rol': rol}, status=status.HTTP_200_OK)
         else:
             return Response({ 'errors': {'non_fields_errors':['User or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400)
@@ -70,6 +78,24 @@ class UserRegisterView(APIView):
             return Response({'Mensaje': 'Usuario Creado con Exito!'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class UserProfileView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        try:
+            custom_user = CustomUser.objects.get(usuario=user)
+            return Response({
+                "username": user.username,
+                "empresa":custom_user.empresa.nombre,
+                "rol": custom_user.user.rol
+            })
+        except CustomUser.DoesNotExist:
+            return Response({
+                "username":user.username,
+                "rol":"sin rol"
+            }) 
+
 class MedicamentoViewSet(viewsets.ModelViewSet):
     serializer_class = MedicamentoSerializer
     permission_classes = [permissions.IsAuthenticated]
