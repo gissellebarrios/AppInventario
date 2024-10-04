@@ -27,8 +27,8 @@ export class HistorialMovimientoComponent implements OnInit{
     this.medicamentoId = Number(this.route.snapshot.paramMap.get('id'));
     if(this.medicamentoId){
       this.medicamentosService.getHistorialMovimientos(this.medicamentoId).subscribe(
-        (data: Movimiento[])=>{
-          this.movimientos = data;
+        (data: any)=>{
+          this.movimientos = data.results;
         },
         (error) => {
           console.error('Error al obtener el historial de movimientos', error);

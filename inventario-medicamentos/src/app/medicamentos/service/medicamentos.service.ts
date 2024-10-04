@@ -60,7 +60,7 @@ addMedicamento(medicamento: Medicamentos): Observable<Medicamentos>{
   }
 
   getHistorialMovimientos(medicamentoId: number): Observable<Movimiento[]> {
-    const url = `http://127.0.0.1:8000/api/movimientos/?medicamento=${medicamentoId}`;
+    const url = `http://127.0.0.1:8000/api/movimientos/?medicamento/${medicamentoId}`;
     return this.http.get<Movimiento[]>(url);
   }
   

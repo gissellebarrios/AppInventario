@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit{
       const {username, password} = this.loginForm.value;
       this.loginService.login(username,password).subscribe(
         (response) =>{
-          this.loginService.saveTokens(response.access, response.refresh, username)
+          this.loginService.saveTokens(response.access, response.refresh, username, response.rol)
           this.router.navigate(['/medicamentos']);
         },
         (error) => {

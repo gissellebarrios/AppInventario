@@ -17,16 +17,15 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path:'inicio', component: InicioComponent},
   //{ path: '**', redirectTo: '/inicio' },
-  { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard] },
+  { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
   { path: 'reportes', component: ReportesComponent },
-  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
-  { path: 'movimientos', component: MovimientosComponent,canActivate:[AuthGuard] },
-  { path: 'estadisticas', component: EstadisticasComponent, canActivate:[AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
+  { path: 'movimientos', component: MovimientosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard] },
-  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard] },
-  { path: 'historial-movimientos/:id', component:HistorialMovimientoComponent, canActivate:[AuthGuard]}
+  { path: 'register', component: RegisterComponent, canActivate:[AuthGuard], data:{ roles:['admin']} },
+  { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
+  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
+  { path: 'historial-movimientos/:id', component:HistorialMovimientoComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']}}
 ];
 
 @NgModule({
