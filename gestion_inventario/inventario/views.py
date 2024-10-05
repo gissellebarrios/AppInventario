@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Sum
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 
 from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
 from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
