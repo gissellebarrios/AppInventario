@@ -7,17 +7,16 @@ import { Observable, BehaviorSubject, catchError, throwError, tap, switchMap } f
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://127.0.0.1:8000/api/api/login/';
+  private apiUrl = 'http://127.0.0.1:8000/api/login/';
   private refreshUrl = 'http://127.0.0.1:8000/api/api/token/refresh/';  
   private profileUrl = 'http://127.0.0.1:8000/api/profile/';
-  private userprofileUrl = 'http://127.0.0.1:8000/api/user-profile/'
   constructor(private http: HttpClient) { }
 
   login(username:string, password:string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, {username,password})
     .pipe(
       tap(response => {
-        this.saveTokens(response.access, response.refresh,username, response.rol);
+        this.saveTokens(response.token.access, response.token.refresh,username, response.rol);
       }),
       catchError(this.handleError)
     )
@@ -33,13 +32,10 @@ export class LoginService {
     localStorage.setItem('rol', rol); 
   }
   getUsername(): string | null {
-    return localStorage.getItem('username'); // Obtener el nombre de usuario
+    return localStorage.getItem('username'); 
   }
   getRole(): string | null {
-    const token = this.getToken();
-    if(!token) return null;
-    const tokenPayload = JSON.parse(atob(token.split('.')[1]))
-    return tokenPayload.rol || null;
+    return localStorage.getItem('rol'); 
   }
 
   getToken(): string | null {

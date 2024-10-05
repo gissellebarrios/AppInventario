@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   constructor(private loginService: LoginService, private router: Router){}
   ngOnInit(): void {
     this.username = this.loginService.getUsername();
-    this.rol = this.loginService.getRole();
   }
 
   logout() {
@@ -27,11 +26,5 @@ export class AppComponent implements OnInit {
     this.loginService.getProfile().subscribe(profile => {
       this.router.navigate(['/profile']);
     });
-  }
-  isAdmin(): boolean{
-    return this.rol === 'admin';
-  }
-  isEmployee(): Boolean{
-    return this.rol === 'emp'
   }
 }
