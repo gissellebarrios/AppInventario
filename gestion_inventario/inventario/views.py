@@ -11,6 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db.models import Sum
 from rest_framework.exceptions import NotFound, PermissionDenied
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+import datetime
 
 from .models import Medicamento, Movimiento, Profile, Empresa,CustomUser, Alertas
 from .serializers import MedicamentoSerializer, MovimientoSerializer, ProfileSerializer, Loginserializer, EmpresaSerializer, Alertaserializer, Registerserializer
@@ -140,6 +144,29 @@ class AlertaListView(APIView):
                     'umbral_stock':alerta.umbral_stock
                 })
         return JsonResponse(notificaciones, safe=False)
+
+
+
+def generar_reporte_pdf(request):
+    movimientos = Movimiento.objects.all()
+    empresa_nombre = Empresa.objects.filter()
+    fecha_reporte = datetime.datetime.now()
+
+    html = render_to_string('reporte_movimientos.html', {
+        'movimientos': movimientos,
+        'empresa_nombre': empresa_nombre,
+        'fecha_reporte': fecha_reporte
+    })
+
+    response = HttpResponse(content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="reporte.pdf"' 
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('Error al generar PDF', status =status.HTTP_400_BAD_REQUEST)
+        
+    return response
 
 
 from django.http import HttpResponseForbidden

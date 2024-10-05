@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Reporte de Movimiento
+        </title>
+        <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Reporte de Movimientos</h1>
+        <p>Empresa: {{empresa_nombre}}</p>
+        <p>Fecha de reporte: fecha_reporte|date:"Y-m-d H:i:s"</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Medicamento</th>
+                    <th>Cantidad</th>
+                    <th>Tipo de movimiento</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for movimiento in movimientos %}
+                <tr>
+                    <td>{{movimiento.fecha:| date:"Y-m-d"}}</td>
+                    <td>{{movimiento.medicamento.nombre}}</td>
+                    <td>{{movimiento.cantidad}}</td>
+                    <td>{{movimiento.motivo}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table> 
+    </body>
+</html>
