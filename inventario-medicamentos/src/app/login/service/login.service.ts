@@ -10,26 +10,34 @@ export class LoginService {
   private apiUrl = 'http://127.0.0.1:8000/api/login/';
   private refreshUrl = 'http://127.0.0.1:8000/api/api/token/refresh/';  
   private profileUrl = 'http://127.0.0.1:8000/api/profile/';
+ 
   constructor(private http: HttpClient) { }
 
-  login(username:string, password:string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, {username,password})
-    .pipe(
-      tap(response => {
-        this.saveTokens(response.token.access, response.token.refresh,username, response.rol);
-      }),
-      catchError(this.handleError)
-    )
-  }
-  private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error);
-    return throwError(error);
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, { username, password })
+      .pipe(
+        tap(response => {
+          // Verificar si la respuesta contiene los tokens
+          if (response && response.token) {
+            const accessToken = response.token.access
+            const refreshToken = response.token.refresh
+            // Guardar el accessToken y refreshToken correctamente
+            localStorage.setItem('accessToken', accessToken); 
+            localStorage.setItem('refreshToken', refreshToken); 
+            localStorage.setItem('username', username);
+            localStorage.setItem('rol', response.rol);
+          } else {
+            console.error('Error: Respuesta de login no contiene token.');
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
   saveTokens(access: string, refresh: string, username: string, rol: string,) {
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
     localStorage.setItem('username', username);
-    localStorage.setItem('rol', rol); 
+      localStorage.setItem('rol', rol); 
   }
   getUsername(): string | null {
     return localStorage.getItem('username'); 
@@ -39,11 +47,11 @@ export class LoginService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('access');
+    return localStorage.getItem('accessToken');
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem('refresh');
+    return localStorage.getItem('refreshToken');
   }
 
   logout(){
@@ -53,7 +61,7 @@ export class LoginService {
 
   getProfile(): Observable<any> {
     if(this.isTokenExpired()){
-      return this.refreshToken().pipe(
+      return this.refreshAccessToken().pipe(
         switchMap(() => {
           const token =this.getToken();
           const headers = { Authorization: `Bearer ${token}`};
@@ -75,20 +83,22 @@ export class LoginService {
     return !!localStorage.getItem('access');
   }
 
-  refreshToken(): Observable<any> {
-    const refresh = this.getRefreshToken();
-    if (refresh) {
-      return this.http.post<any>(this.refreshUrl, { refresh })
-        .pipe(
-          tap(response => {
-            // Guardar el nuevo token de acceso
-            localStorage.setItem('access', response.access);
-          }),
-          catchError(this.handleError)  // Manejar errores de renovación
-        );
-    } else {
-      return throwError('No refresh token found');
+  refreshAccessToken(): Observable<any> {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      return throwError('Refresh token not available')
     }
+      return this.http.post<any>(this.refreshUrl, { refresh : refreshToken })
+        .pipe(
+          tap(tokens  => {
+            // Guardar el nuevo token de acceso
+            localStorage.setItem('accessToken', tokens.access);
+          }),
+          catchError(error => {
+            console.error('Error al refrescar el token:', error);
+            return throwError(error);  // Manejar errores de renovación
+          })
+        );
   }
 
   isTokenExpired(): boolean {
@@ -101,7 +111,13 @@ export class LoginService {
 
     return now > expiry;
   }
+
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError(error);
+  }
 }
+
 
 
 
