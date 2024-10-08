@@ -22,7 +22,7 @@
       <tbody>
         <tr *ngFor="let movimiento of movimientos">
           <td>{{ movimiento.fecha | date: 'yyyy-MM-dd' }}</td>
-          <td>{{ movimiento.medicamento.nombre }}</td>
+          <td>{{ movimiento.medicamento_nombre }}</td>
           <td>{{ movimiento.cantidad }}</td>
           <td>{{ movimiento.motivo }}</td>
         </tr>

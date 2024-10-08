@@ -28,7 +28,7 @@ export class HistorialMovimientoComponent implements OnInit{
     if(this.medicamentoId){
       this.medicamentosService.getHistorialMovimientos(this.medicamentoId).subscribe(
         (data: any)=>{
-          this.movimientos = data.results;
+          this.movimientos = data.results.filter((movimiemto:any) => movimiemto.medicamento === this.medicamentoId);
         },
         (error) => {
           console.error('Error al obtener el historial de movimientos', error);

@@ -17,15 +17,15 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path:'inicio', component: InicioComponent},
   //{ path: '**', redirectTo: '/inicio' },
-  { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
-  { path: 'reportes', component: ReportesComponent,  data:{ roles:['admin']} },
-  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
-  { path: 'movimientos', component: MovimientosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
-  { path: 'login', component: LoginComponent, data: { roles: ['admin', 'user']} },
+  { path: 'medicamentos', component: MedicamentosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']} },
+  { path: 'reportes', component: ReportesComponent, canActivate:[AuthGuard], data:{ roles:['admin']} },
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']} },
+  { path: 'movimientos', component: MovimientosComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']} },
+  { path: 'login', component: LoginComponent, data: { roles: ['admin', 'emp']} },
   { path: 'register', component: RegisterComponent, canActivate:[AuthGuard], data:{ roles:['admin']} },
-  { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
-  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']} },
-  { path: 'historial-movimientos/:id', component:HistorialMovimientoComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'user']}}
+  { path: 'configuracionalerta', component: AlertSettingsComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']} },
+  { path: 'listalertas', component: NotificacionListComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']} },
+  { path: 'historial-movimientos/:id', component:HistorialMovimientoComponent, canActivate:[AuthGuard], data: { roles: ['admin', 'emp']}}
 ];
 
 @NgModule({

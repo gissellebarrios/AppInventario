@@ -15,7 +15,8 @@ export class AuthGuard implements CanActivate {
       if(allowedRoles && userRole && allowedRoles.includes(userRole)){
         return true;
       } else {
-        this.router.navigate(['/']);
+        alert("Este usuario no tiene rol de Administrador para ingresar a este modulo.")
+        this.router.navigate(['/medicamentos']);
         return false;
       }
     } else {

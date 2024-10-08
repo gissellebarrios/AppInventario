@@ -65,8 +65,12 @@ export class MedicamentosService {
 
   getHistorialMovimientos(medicamentoId: number): Observable<Movimiento[]> {
     const headers = this.getAuthHeaders(); 
-    const url = `http://127.0.0.1:8000/api/movimientos/?medicamento/${medicamentoId}`;
+    const url = `http://127.0.0.1:8000/api/movimientos/?medicamento=${medicamentoId}`;
     return this.http.get<Movimiento[]>(url, {headers});
+  }
+
+  obtenerEmpresa(empresaId: number): Observable<any>{
+    return this.http.get<any>(`http://127.0.0.1:8000/api/empresas/${empresaId}/`)
   }
   
   deleteMedicamento(medicamento: Medicamentos): Observable<void> {
