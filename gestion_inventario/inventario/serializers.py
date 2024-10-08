@@ -12,9 +12,10 @@ class MedicamentoSerializer(serializers.ModelSerializer):
 
 
 class MovimientoSerializer(serializers.ModelSerializer):
+    medicamento_nombre = serializers.CharField(source='medicamento.nombre', read_only=True)
     class Meta:
         model = Movimiento
-        fields = '__all__'
+        fields =['fecha','cantidad','motivo','medicamento','medicamento_nombre','empresaid']
 
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='usuarioperfil.username',read_only=True)

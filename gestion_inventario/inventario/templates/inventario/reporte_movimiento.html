@@ -40,7 +40,7 @@
                 {% for movimiento in movimientos %}
                 <tr>
                     <td>{{movimiento.fecha:| date:"Y-m-d"}}</td>
-                    <td>{{movimiento.medicamento.nombre}}</td>
+                    <td>{{movimiento.medicamento_nombre}}</td>
                     <td>{{movimiento.cantidad}}</td>
                     <td>{{movimiento.motivo}}</td>
                 </tr>

@@ -60,6 +60,7 @@ class Movimiento(models.Model):
     cantidad = models.IntegerField()
     fecha = models.DateField()
     motivo = models.CharField(max_length=255)
+    empresaid = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=3)
 
     def __str__(self):
         return f'{self.motivo} - {self.medicamento.nombre}'
