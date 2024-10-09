@@ -1,0 +1,22 @@
+<div class="container mt-4">
+    <h2>Historial de Movimientos</h2>
+    <div class="mb-3">
+        <button class="btn btn-secondary" (click)="goBack()">Regresar</button>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Motivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movimiento of movimientos">
+                <td>{{movimiento.fecha | date}}</td>
+                <td>{{movimiento.cantidad}}</td>
+                <td>{{movimiento.motivo}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

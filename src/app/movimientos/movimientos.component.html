@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <h2>Medicamentos Registrados</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medicamento of medicamentos">
+        <td>{{ medicamento.nombre }}</td>
+        <td>{{ medicamento.codigo }}</td>
+        <td>{{ medicamento.precio }}</td>
+        <td>{{ medicamento.cantidad }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openModal(movimientoModal, medicamento)">Registrar</button>
+          <button class="btn btn-success" [routerLink]="['/historial-movimientos',medicamento.id]">Historial</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Modal -->
+  <ng-template #movimientoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Registrar Movimiento</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="movimientoForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nombre">Nombre del Medicamento</label>
+          <input type="text" class="form-control" id="nombre" formControlName="nombre" [value]="selectedMedicamento.nombre" readonly>
+        </div>
+        <div class="form-group">
+          <label for="cantidad">Cantidad</label>
+          <input type="number" class="form-control" id="cantidad" formControlName="cantidad" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha del Movimiento</label>
+          <input type="date" class="form-control" id="fecha" formControlName="fecha" required>
+        </div>
+        <div class="form-group">
+          <label for="motivo">Motivo del Movimiento</label>
+          <select class="form-control" id="motivo" formControlName="motivo" required>
+            <option *ngFor="let motivo of motivos" [value]="motivo">{{ motivo }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
+</div>

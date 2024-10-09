@@ -1,0 +1,82 @@
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="text-center">Medicamentos</h2>
+      <div class="text-center mb-3">
+        <button class="btn btn-primary" (click)="openModal()">Agregar Medicamento</button>
+      </div>
+
+      <table class="table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Fecha de Caducidad</th>
+            <th>Lote</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let medicamento of medicamentos">
+            <td>{{ medicamento.nombre }}</td>
+            <td>{{ medicamento.codigo }}</td>
+            <td>{{ medicamento.precio }}</td>
+            <td>{{ medicamento.cantidad }}</td>
+            <td>{{ medicamento.fechacaducidad }}</td>
+            <td>{{ medicamento.lote }}</td>
+            <td>
+              <!-- Botones para editar y eliminar -->
+              <button (click)="openModal(medicamento)" class="btn btn-success btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+              <button *ngIf="medicamento.id != undefined" (click)="deleteMedicamento(medicamento.id)" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #medicamentoModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">{{editMode ? 'Editar Medicamento': 'Agregar Medicamento' }}</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="medicamentosForm">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre">
+            </div>
+            <div class="form-group">
+              <label for="codigo">Código</label>
+              <input type="text" id="codigo" class="form-control" formControlName="codigo">
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" id="precio" class="form-control"  formControlName="precio">
+            </div>
+            <div class="form-group">
+              <label for="cantidad">Cantidad</label>
+              <input type="number" id="cantidad" class="form-control" formControlName="cantidad" required>
+            </div>
+            <div class="form-group">
+              <label for="fechacaducidad">Fecha de Caducidad</label>
+              <input type="date" id="fechacaducidad" class="form-control" formControlName="fechacaducidad" required>
+            </div>
+            <div class="form-group">
+              <label for="lote">Lote</label>
+              <input type="text" id="lote" class="form-control" formControlName="lote">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="saveMedicamento()">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cancelar</button>
+        </div>
+      </ng-template>    
+    </div>
+  </div>
+</div>
+
+  
+

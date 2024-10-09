@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>Reporte de Movimientos</h1>
+  <p>Empresa: {{ empresa_nombre }}</p>
+  <p>Fecha del Reporte: {{ fechaReporte | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+  
+  <button (click)="generarPDF()" class="btn btn-primary">Generar Reporte PDF</button>
+  
+  <div id="contenido-reporte" style="display: none;">
+    <h1>Reporte de Movimientos</h1>
+    <p>Empresa: {{ empresa_nombre }}</p>
+    <p>Fecha del Reporte: {{ fechaReporte | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+    <h2>Movimientos de Medicamentos</h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Medicamento</th>
+          <th>Cantidad</th>
+          <th>Tipo de Movimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimiento of movimientos">
+          <td>{{ movimiento.fecha | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ movimiento.medicamento_nombre }}</td>
+          <td>{{ movimiento.cantidad }}</td>
+          <td>{{ movimiento.motivo }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+</div>

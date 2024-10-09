@@ -1,0 +1,114 @@
+
+
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+        </div>
+        <div class="sidebar-brand-text mx-3">PharmaLogic</div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span> Login</span></a>
+      </li>
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        Modulos
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/medicamentos" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-medkit" aria-hidden="true"></i>
+          <span> Registro de Medicamentos</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/movimientos" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-random" aria-hidden="true"></i>
+          <span> Movimientos </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/configuracionalerta" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-bell" aria-hidden="true"></i>
+          <span> Configuración de las Alertas </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/listalertas" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <span> Lista de Alertas activas </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/reportes" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-file-text" aria-hidden="true"></i>
+          <span> Reportes </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/register" data-toggle="collapsed" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapsedTwo">
+          <i class="fa fa-user-plus" aria-hidden="true"></i>
+          <span> Crear Usuario</span>
+        </a>
+      </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ username }}</span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" (click)="viewProfile()">Perfil</a></li>
+                <li><a class="dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; PharmaLogic 2024</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+

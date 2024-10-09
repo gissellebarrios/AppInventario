@@ -1,0 +1,22 @@
+<div class="container">
+    <h2>Notificaciones de Bajo Stock</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Nombre del Medicamento</th>
+          <th>Stock Actual</th>
+          <th>Umbral de Bajo Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notification of notifications">
+          <td>{{ notification.nombre }}</td>
+          <td>{{ notification.stockactual }}</td>
+          <td>{{ notification.umbral_stock }}</td>
+        </tr>
+        <tr *ngIf="notifications.length === 0">
+          <td colspan="3" class="text-center">No hay datos registrados</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

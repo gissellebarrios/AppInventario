@@ -1,0 +1,21 @@
+/* General body styling */
+body {
+    background-color: #f8f9fa; 
+  }
+ 
+  /* Container for centering and padding */
+  .container {
+    margin-top: 20px; /* Center the container */
+  }
+  
+
+  h1 {
+    background-image: url('/assets/images/medicamento.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white; 
+    padding: 20px;
+    border-radius: 5px;
+  }
+  

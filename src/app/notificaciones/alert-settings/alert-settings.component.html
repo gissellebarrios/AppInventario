@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>Configuración de Alertas</h2>
+  <!--btn nuevo-->
+  <div>
+    <button class="btn btn-primary" (click)="openModal(AlertasModal)">Nueva Alerta</button>
+  </div>
+  <br>
+<!--tabla-->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th style="width: 40%;">Medicamento</th>
+        <th style="width: 40%;">Umbral de Stock</th>
+        <th style="width: 20%;">Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alerta of alertas">
+        <td>{{ alerta.medicamento_nombre }}</td>
+        <td>{{ alerta.umbral_stock }}</td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="openModal(AlertasModal, alerta)"><i class="fa fa-suitcase" aria-hidden="true"></i></button>
+        </td>
+    </tbody>
+  </table>
+
+<!-- Modal -->
+  <ng-template #AlertasModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ isEdite ? 'Editar Alerta' : 'Agregar Alerta'}} </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="alertasForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="medicamento">Medicamento</label>
+          <select class="form-control" id="medicamento" formControlName="medicamento">
+            <option *ngFor="let medicamento of medicamentos" [value]="medicamento.id">
+              {{medicamento.nombre}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="umbral_stock">Umbral para Stock Bajo</label>
+          <input type="number" class="form-control" id="umbral_stock" formControlName="umbral_stock" required>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
+</div>
