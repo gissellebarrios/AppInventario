@@ -1,9 +1,9 @@
 version: 1
 services:
   - type: web
-    name: inventario-medicamentos
+    name: AppFrontend
     env: node
     buildCommand: npm install && npm run build
-    startCommand: serve -s dist/inventario-medicamentos
+    startCommand: npx serve -s dist/inventario-medicamentos
     autoDeploy: true
-    plan: free
+    region: oregon
