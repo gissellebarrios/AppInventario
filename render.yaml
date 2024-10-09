@@ -4,4 +4,4 @@ services:
     env: static
     staticPublishPath: dist/inventario-medicamentos
     buildCommand: npm install && npm run build
-    startCommand: npx serve -s dist/inventario-medicamentos
+    startCommand: npm start
