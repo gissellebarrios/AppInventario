@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: PharmaFrontend
+    env: static
+    staticPublishPath: dist/inventario-medicamentos
+    buildCommand: npm install && npm run build
+    startCommand: npm start
