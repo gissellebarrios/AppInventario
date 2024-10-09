@@ -4,6 +4,6 @@ services:
     name: AppFrontend
     env: node
     buildCommand: npm install && npm run build
-    startCommand: npx serve -s dist/inventario-medicamentos
+    startCommand: npm run start
     autoDeploy: true
     region: oregon
