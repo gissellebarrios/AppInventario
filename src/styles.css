@@ -5,7 +5,7 @@ body {
  
   /* Container for centering and padding */
   .container {
-    margin-top: 20px; /* Center the container */
+    margin-top: 10px; /* Center the container */
   }
   
 
@@ -19,3 +19,10 @@ body {
     border-radius: 5px;
   }
   
+
+  .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }

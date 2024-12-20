@@ -1,16 +1,20 @@
 <div class="container">
   <h1>Reporte de Movimientos</h1>
-  <p>Empresa: {{ empresa_nombre }}</p>
+  <p *ngIf="movimientos.length > 0">Empresa: {{ empresa_nombre }}</p>
   <p>Fecha del Reporte: {{ fechaReporte | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
   
-  <button (click)="generarPDF()" class="btn btn-primary">Generar Reporte PDF</button>
+  <button *ngIf="movimientos.length > 0" (click)="generarPDF()" class="btn btn-primary">Generar Reporte PDF</button>
   
+  <div *ngIf="movimientos.length === 0">
+    <p>No hay movimientos registrados</p>
+  </div>
+
   <div id="contenido-reporte" style="display: none;">
     <h1>Reporte de Movimientos</h1>
     <p>Empresa: {{ empresa_nombre }}</p>
     <p>Fecha del Reporte: {{ fechaReporte | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
     <h2>Movimientos de Medicamentos</h2>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" *ngIf="movimientos.length > 0">
       <thead>
         <tr>
           <th>Fecha</th>

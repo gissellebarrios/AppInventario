@@ -69,8 +69,8 @@ export class MedicamentosService {
     return this.http.get<Movimiento[]>(url, {headers});
   }
 
-  obtenerEmpresa(empresaId: number): Observable<any>{
-    return this.http.get<any>(`http://127.0.0.1:8000/api/empresas/${empresaId}/`)
+  obtenerEmpresa(id: number): Observable<any>{
+    return this.http.get<any>(`http://127.0.0.1:8000/api/empresas/${id}/`)
   }
   
   deleteMedicamento(medicamento: Medicamentos): Observable<void> {

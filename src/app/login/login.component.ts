@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit{
         (error) => {
           this.errorMessage = 'Credenciales incorrectas';
           console.error('Login Failed', error);
+          alert('Usuario o clave invalida')
+          this.router.navigate(['/'])
         }
       )
 

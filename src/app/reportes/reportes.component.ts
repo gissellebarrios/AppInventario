@@ -14,6 +14,7 @@ export class ReportesComponent implements OnInit {
   movimientos: any[] = [];
   empresa_nombre: string = 'Nombre de la empresa';
   fechaReporte: Date = new Date();
+  mensajeNoMovimientos: string = '';
 
   constructor(private http: HttpClient, private medicamentoService : MedicamentosService){}
 
@@ -26,10 +27,14 @@ export class ReportesComponent implements OnInit {
     .subscribe(
       (data) =>{
         this.movimientos = data.results;
-        if(this.movimientos.length > 0){
-          const empresaId = this.movimientos[0].empresaid;
-          if(empresaId){
-            this.obtenerEmpresaId(empresaId);
+        if(this.movimientos.length === 0){
+          console.log('No hay movimientos registrados');
+          this.mensajeNoMovimientos = 'No hay movimientos registrados'; 
+        }
+        else {
+          const id = this.movimientos[0].empresaid;
+          if(id){
+            this.obtenerEmpresaId(id);
           }
           else {
             console.error('No se encontro empresaId en los movimientos.')
@@ -42,8 +47,8 @@ export class ReportesComponent implements OnInit {
     );
   }
 
-  obtenerEmpresaId(empresaId:number):void {
-    this.medicamentoService.obtenerEmpresa(empresaId).subscribe(
+  obtenerEmpresaId(id:number):void {
+    this.medicamentoService.obtenerEmpresa(id).subscribe(
       (data) => {
         this.empresa_nombre = data.nombre
       },
